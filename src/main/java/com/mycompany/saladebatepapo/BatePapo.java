@@ -5,6 +5,12 @@
  */
 package com.mycompany.saladebatepapo;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author aluno
@@ -14,6 +20,8 @@ public class BatePapo extends javax.swing.JFrame {
     /**
      * Creates new form BatePapo
      */
+    ConectarThread conectar;
+    DefaultListModel listModel;
     public BatePapo() {
         initComponents();
     }
@@ -61,8 +69,18 @@ public class BatePapo extends javax.swing.JFrame {
         });
 
         jButtonEntrar.setText("Entrar");
+        jButtonEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEntrarActionPerformed(evt);
+            }
+        });
 
         jButtonSair.setText("Sair");
+        jButtonSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,11 +134,14 @@ public class BatePapo extends javax.swing.JFrame {
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
-        jTextFieldMensagem.setText("jTextField1");
-
         jScrollPane1.setViewportView(jListBatePapo);
 
         jButtonEnviar.setText("Enviar");
+        jButtonEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEnviarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -168,6 +189,55 @@ public class BatePapo extends javax.swing.JFrame {
     private void jTextFieldChaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldChaveActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldChaveActionPerformed
+
+    private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
+        // TODO add your handling code here:
+        if (jTextFieldChave.getText().equals("") || jTextFieldGrupo.getText().equals("")
+                || jTextFieldNome.getText().equals("") || jTextFieldPorta.getText().equals("")) {
+            System.out.println("Favor Preencher Todos os Campos!");
+        } else if (Integer.parseInt(jTextFieldPorta.getText()) < 1 || Integer.parseInt(jTextFieldPorta.getText()) > 65535) {
+            System.out.println("Porta deve ser entre 1 - 65535");
+        } else {
+            System.out.println("ok");
+            conectar = new ConectarThread(Integer.parseInt(jTextFieldPorta.getText()),
+                    jTextFieldNome.getText(), this, jTextFieldGrupo.getText());
+            listModel = new DefaultListModel();
+            jListBatePapo.setModel(listModel);
+            conectar.start();
+        }
+        
+    }//GEN-LAST:event_jButtonEntrarActionPerformed
+
+    private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
+        // TODO add your handling code here:
+        enviarMensagem(jTextFieldNome.getText() + " Saiu da Sala!");
+        conectar.interrupt();
+    }//GEN-LAST:event_jButtonSairActionPerformed
+
+    private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
+        // TODO add your handling code here:
+        enviarMensagem(jTextFieldNome.getText()+" Diz: "+jTextFieldMensagem.getText());
+        jTextFieldMensagem.setText("");
+    }//GEN-LAST:event_jButtonEnviarActionPerformed
+    public void inserirTexto(String texto) {
+        listModel.addElement(texto);
+
+    }
+
+    public void enviarMensagem(String texto) {
+        try{
+
+        int port = Integer.parseInt(jTextFieldPorta.getText());
+        InetAddress group = InetAddress.getByName(jTextFieldGrupo.getText());
+        MulticastSocket socket = new MulticastSocket(port);
+        socket.joinGroup(group);
+        byte[] data = texto.getBytes();
+        DatagramPacket msgOut = new DatagramPacket(data, data.length, group, port);
+        socket.send(msgOut);
+        }catch (IOException e){
+            
+        }
+    }
 
     /**
      * @param args the command line arguments
