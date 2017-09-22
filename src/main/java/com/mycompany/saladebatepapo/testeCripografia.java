@@ -22,7 +22,7 @@ public class testeCripografia {
         byte[] criptografado = null;
         String descriptografado;
 
-        chave = "aaaaaaaaaaaaaaaA";
+        chave = "raioperinzador12";
         teste = "teste";
 
         try {

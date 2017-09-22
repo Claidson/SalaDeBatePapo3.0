@@ -14,7 +14,7 @@ import javax.crypto.spec.SecretKeySpec;
  * @author Claidson
  */
 public class CriptografiaAES {
-    static String IV ="AAAAAAAAAAA";
+    static String IV ="1234asdf1234asdf";
 
 
     public byte[] criptografar(String mensagem, String chaveEncriptacao) throws Exception {
