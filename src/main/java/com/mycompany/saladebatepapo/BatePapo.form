@@ -112,6 +112,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNome">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Heisenberg"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -119,6 +122,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPorta">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="6666"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -126,6 +132,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldGrupo">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="228.5.6.7"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
@@ -133,6 +142,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldChave">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="raioperinzador17"/>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldChaveActionPerformed"/>
           </Events>

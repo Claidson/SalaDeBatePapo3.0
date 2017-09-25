@@ -6,9 +6,12 @@
 package com.mycompany.saladebatepapo;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
 /**
@@ -22,8 +25,12 @@ public class BatePapo extends javax.swing.JFrame {
      */
     ConectarThread conectar;
     DefaultListModel listModel;
+    CriptografiaAES criptografia;
+    
+
     public BatePapo() {
         initComponents();
+        criptografia = new CriptografiaAES();
     }
 
     /**
@@ -56,12 +63,19 @@ public class BatePapo extends javax.swing.JFrame {
 
         jLabel1.setText("Nome");
 
+        jTextFieldNome.setText("Heisenberg");
+
         jLabel2.setText("Porta");
+
+        jTextFieldPorta.setText("6666");
 
         jLabel3.setText("Grupo");
 
+        jTextFieldGrupo.setText("228.5.6.7");
+
         jLabel4.setText("Chave AES");
 
+        jTextFieldChave.setText("raioperinzador17");
         jTextFieldChave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldChaveActionPerformed(evt);
@@ -200,42 +214,66 @@ public class BatePapo extends javax.swing.JFrame {
         } else {
             System.out.println("ok");
             conectar = new ConectarThread(Integer.parseInt(jTextFieldPorta.getText()),
-                    jTextFieldNome.getText(), this, jTextFieldGrupo.getText());
+                    jTextFieldNome.getText(), this, jTextFieldGrupo.getText(), jTextFieldChave.getText());
             listModel = new DefaultListModel();
             jListBatePapo.setModel(listModel);
             conectar.start();
         }
-        
+
     }//GEN-LAST:event_jButtonEntrarActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
         // TODO add your handling code here:
-        enviarMensagem(jTextFieldNome.getText() + " Saiu da Sala!");
+        String nome = jTextFieldNome.getText();
+        String texto = "Saiu da sala";
+        prepararMensagem(nome, texto);
         conectar.interrupt();
     }//GEN-LAST:event_jButtonSairActionPerformed
 
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
-        // TODO add your handling code here:
-        enviarMensagem(jTextFieldNome.getText()+" Diz: "+jTextFieldMensagem.getText());
-        jTextFieldMensagem.setText("");
+        String nome = jTextFieldNome.getText();
+        String texto = jTextFieldMensagem.getText();
+        prepararMensagem(nome, texto);
+
     }//GEN-LAST:event_jButtonEnviarActionPerformed
     public void inserirTexto(String texto) {
         listModel.addElement(texto);
 
     }
 
-    public void enviarMensagem(String texto) {
-        try{
+    public void prepararMensagem(String nome, String texto) {
 
-        int port = Integer.parseInt(jTextFieldPorta.getText());
-        InetAddress group = InetAddress.getByName(jTextFieldGrupo.getText());
-        MulticastSocket socket = new MulticastSocket(port);
-        socket.joinGroup(group);
-        byte[] data = texto.getBytes();
-        DatagramPacket msgOut = new DatagramPacket(data, data.length, group, port);
-        socket.send(msgOut);
-        }catch (IOException e){
-            
+        String mensagemOriginal;
+        String mensagemCriptografada = "";
+        mensagemOriginal = nome + " Diz: " + texto;
+        System.out.println("mensagem original" + mensagemOriginal + " Chave: " + jTextFieldChave.getText());
+        byte[] criptografado = null;
+        try {
+            criptografado = criptografia.criptografar(mensagemOriginal, jTextFieldChave.getText());
+        } catch (Exception ex) {
+            Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("pau no criptografar");
+        }
+        for (int i = 0; i < criptografado.length; i++) {
+            System.out.print(new Integer(criptografado[i]) + " ");
+        }
+
+        enviarMensagem(criptografado);
+        jTextFieldMensagem.setText("");
+    }
+
+    public void enviarMensagem(byte[] data) {
+        try {
+
+            int port = Integer.parseInt(jTextFieldPorta.getText());
+            InetAddress group = InetAddress.getByName(jTextFieldGrupo.getText());
+            MulticastSocket socket = new MulticastSocket(port);
+            socket.joinGroup(group);
+            // byte[] data = texto.getBytes();
+            DatagramPacket msgOut = new DatagramPacket(data, data.length, group, port);
+            socket.send(msgOut);
+        } catch (IOException e) {
+
         }
     }
 

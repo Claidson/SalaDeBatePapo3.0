@@ -18,13 +18,16 @@ public class ConectarThread extends Thread{
     String nome;
     BatePapo sala;
     String grupo;
+    String chave;
     byte[] buffer;
     DatagramPacket msgIn;
-    public ConectarThread(int porta, String nome, BatePapo sala, String grupo){
+    CriptografiaAES criptografia = new CriptografiaAES();
+    public ConectarThread(int porta, String nome, BatePapo sala, String grupo, String chave){
         this.porta = porta;
         this.nome = nome;
         this.sala = sala;
         this.grupo = grupo;
+        this.chave = chave;
     }
     public void enviarMensage(){
         
@@ -47,7 +50,11 @@ public class ConectarThread extends Thread{
                     buffer = new byte[1000];
                    msgIn = new DatagramPacket(buffer, buffer.length); 
                     socket.receive(msgIn);
-                    sala.inserirTexto(new String(msgIn.getData()));
+                    System.out.println("chave trhaed: "+ chave);
+                    String mensagem = new String(msgIn.getData());
+                    //String mensagem = criptografia.descriptografar(msgIn.getData(), chave);
+                    System.out.println("Tamanho: "+mensagem.length());
+                    sala.inserirTexto(new String(mensagem));
                     msgIn = new DatagramPacket(buffer, buffer.length); 
                     
             }
