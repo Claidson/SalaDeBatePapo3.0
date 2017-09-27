@@ -250,12 +250,15 @@ public class BatePapo extends javax.swing.JFrame {
         byte[] criptografado = null;
         try {
             criptografado = criptografia.criptografar(mensagemOriginal, jTextFieldChave.getText());
+            System.out.println("criptografado: "+ criptografado);
+            String descriptografado = criptografia.descriptografar(criptografado, jTextFieldChave.getText());
+            System.out.println("Descriptografado no try:"+ descriptografado);
         } catch (Exception ex) {
             Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("pau no criptografar");
         }
         for (int i = 0; i < criptografado.length; i++) {
-            System.out.print(new Integer(criptografado[i]) + " ");
+            System.out.print(new Integer(criptografado[i]));
         }
 
         enviarMensagem(criptografado);
