@@ -23,7 +23,7 @@ public class testeCripografia {
         String descriptografado;
 
         chave = "raioperinzador12";
-        teste = "teste";
+        teste = "testeqwertyuiopasdfghjklzxcvbnmqqwewqeasdasdasdasdafasfdasdaDJUHABVSCUAXBWVDWYQVXDAHSDVWQYVUAVsdsajhdvasjdvajdvjahbdsajdbajhbaqwe r";
 
         try {
             criptografado = criptografia.criptografar(teste, chave);
