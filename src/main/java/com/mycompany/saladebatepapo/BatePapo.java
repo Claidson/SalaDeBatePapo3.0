@@ -28,10 +28,13 @@ public class BatePapo extends javax.swing.JFrame {
     ConectarThread conectar;
     DefaultListModel listModel;
     CriptografiaAES criptografia;
+    Boolean conectou ;
 
     public BatePapo() {
         initComponents();
         criptografia = new CriptografiaAES();
+        conectou = false;
+        getRootPane().setDefaultButton(jButtonEnviar);
     }
 
     /**
@@ -219,6 +222,9 @@ public class BatePapo extends javax.swing.JFrame {
             listModel = new DefaultListModel();
             jListBatePapo.setModel(listModel);
             conectar.start();
+           
+            conectou = true;
+            System.out.println("conectou: "+conectou);
             String nome = jTextFieldNome.getText();
             String texto = "Entrou sa sala";
             prepararMensagem(nome, texto);
@@ -236,11 +242,20 @@ public class BatePapo extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSairActionPerformed
 
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
-        String nome = jTextFieldNome.getText();
-        String texto = jTextFieldMensagem.getText();
-        prepararMensagem(nome, texto);
 
+        if (jTextFieldChave.getText().equals("") || jTextFieldGrupo.getText().equals("")
+                || jTextFieldNome.getText().equals("") || jTextFieldPorta.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+        } else if (conectou) {
+            System.out.println("conectou enviar: "+conectou);
+            String nome = jTextFieldNome.getText();
+            String texto = jTextFieldMensagem.getText();
+            prepararMensagem(nome, texto);
+        } else {
+            JOptionPane.showMessageDialog(null, "Entre na sala primeiro!");
+        }
     }//GEN-LAST:event_jButtonEnviarActionPerformed
+
     public void inserirTexto(String texto) {
         listModel.addElement(texto);
 
