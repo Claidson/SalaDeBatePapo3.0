@@ -17,21 +17,34 @@ import javax.crypto.spec.SecretKeySpec;
  * @author Claidson
  */
 public class CriptografiaAES {
-    static String IV ="1234asdf1234asdf";
 
+    static String IV = "1234asdf1234asdf";
+
+    /*Converte a chave para tamanho multiplo de 16*/
+    public String converteChave(String original) {
+        StringBuffer saida = new StringBuffer(original);
+        int restante = saida.length() % 16;
+        if (restante != 0) {
+            restante = 16 - restante;
+            for (int i = 0; i < restante; i++) {
+                saida.append((char) 0);
+            }
+        }
+        return saida.toString();
+    }
 
     public byte[] criptografar(String mensagem, String chaveEncriptacao) throws Exception {
-         byte[] textoencriptado = encrypt(mensagem, chaveEncriptacao);
+        String chave16 = converteChave(chaveEncriptacao);
+        byte[] textoencriptado = encrypt(mensagem, chave16);
         return textoencriptado;
-        
+
     }
 
     public String descriptografar(byte[] textoencriptado, String chaveEncriptacao) throws Exception {
-        String textodecriptado = decrypt(textoencriptado, chaveEncriptacao);
+        String chave16 = converteChave(chaveEncriptacao);
+        String textodecriptado = decrypt(textoencriptado, chave16);
         return textodecriptado;
     }
-
-
 
     public static byte[] encrypt(String textopuro, String chaveencriptacao) throws Exception {
         Cipher encripta = Cipher.getInstance("AES/CBC/PKCS5Padding", "SunJCE");
@@ -46,7 +59,7 @@ public class CriptografiaAES {
         decripta.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(IV.getBytes("UTF-8")));
         return new String(decripta.doFinal(textoencriptado), "UTF-8");
     }
-/*
+    /*
 public static String encrypt(String value, byte[] chave) {
         String retorno = null;
         try {

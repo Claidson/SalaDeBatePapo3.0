@@ -6,7 +6,6 @@
 package br.edu.ifsc.saladebatepapo;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
@@ -77,7 +76,9 @@ public class BatePapo extends javax.swing.JFrame {
 
         jLabel4.setText("Chave AES");
 
+        jTextFieldChave.setColumns(16);
         jTextFieldChave.setText("raioperinzador17");
+        jTextFieldChave.setToolTipText("Tamanho máximo 16 caracteres");
         jTextFieldChave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldChaveActionPerformed(evt);
@@ -213,6 +214,8 @@ public class BatePapo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
         } else if (Integer.parseInt(jTextFieldPorta.getText()) < 1 || Integer.parseInt(jTextFieldPorta.getText()) > 65535) {
             JOptionPane.showMessageDialog(null, "Porta deve ser entre 1 - 65535");
+        } else if (jTextFieldChave.getText().length()>16) {
+            JOptionPane.showMessageDialog(null, "Tamanho máximo da chave é 16 caracteres");
         } else {
             System.out.println("Conectado");
             conectar = new ConectarThread(Integer.parseInt(jTextFieldPorta.getText()),
@@ -224,7 +227,7 @@ public class BatePapo extends javax.swing.JFrame {
             conectou = true;
             System.out.println("conectou: "+conectou);
             String nome = jTextFieldNome.getText();
-            String texto = "Entrou sa sala";
+            String texto = "Entrou na sala";
             prepararMensagem(nome, texto);
 
         }
@@ -237,6 +240,7 @@ public class BatePapo extends javax.swing.JFrame {
         String texto = "Saiu da sala";
         prepararMensagem(nome, texto);
         conectar.interrupt();
+        conectou = false;
     }//GEN-LAST:event_jButtonSairActionPerformed
 
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed

@@ -140,7 +140,9 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldChave">
           <Properties>
+            <Property name="columns" type="int" value="16"/>
             <Property name="text" type="java.lang.String" value="raioperinzador17"/>
+            <Property name="toolTipText" type="java.lang.String" value="Tamanho m&#xe1;ximo 16 caracteres"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldChaveActionPerformed"/>
