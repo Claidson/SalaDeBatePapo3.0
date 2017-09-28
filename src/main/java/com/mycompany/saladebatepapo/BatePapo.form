@@ -112,9 +112,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNome">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Heisenberg"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>

@@ -67,8 +67,6 @@ public class BatePapo extends javax.swing.JFrame {
 
         jLabel1.setText("Nome");
 
-        jTextFieldNome.setText("Heisenberg");
-
         jLabel2.setText("Porta");
 
         jTextFieldPorta.setText("6666");
