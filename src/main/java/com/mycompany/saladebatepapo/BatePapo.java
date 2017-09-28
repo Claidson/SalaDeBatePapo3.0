@@ -10,9 +10,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,7 +28,6 @@ public class BatePapo extends javax.swing.JFrame {
     ConectarThread conectar;
     DefaultListModel listModel;
     CriptografiaAES criptografia;
-    
 
     public BatePapo() {
         initComponents();
@@ -208,16 +209,20 @@ public class BatePapo extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jTextFieldChave.getText().equals("") || jTextFieldGrupo.getText().equals("")
                 || jTextFieldNome.getText().equals("") || jTextFieldPorta.getText().equals("")) {
-            System.out.println("Favor Preencher Todos os Campos!");
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
         } else if (Integer.parseInt(jTextFieldPorta.getText()) < 1 || Integer.parseInt(jTextFieldPorta.getText()) > 65535) {
-            System.out.println("Porta deve ser entre 1 - 65535");
+            JOptionPane.showMessageDialog(null, "Porta deve ser entre 1 - 65535");
         } else {
-            System.out.println("ok");
+            System.out.println("Conectado");
             conectar = new ConectarThread(Integer.parseInt(jTextFieldPorta.getText()),
                     jTextFieldNome.getText(), this, jTextFieldGrupo.getText(), jTextFieldChave.getText());
             listModel = new DefaultListModel();
             jListBatePapo.setModel(listModel);
             conectar.start();
+            String nome = jTextFieldNome.getText();
+            String texto = "Entrou sa sala";
+            prepararMensagem(nome, texto);
+
         }
 
     }//GEN-LAST:event_jButtonEntrarActionPerformed
@@ -244,21 +249,17 @@ public class BatePapo extends javax.swing.JFrame {
     public void prepararMensagem(String nome, String texto) {
 
         String mensagemOriginal;
-        String mensagemCriptografada = "";
         mensagemOriginal = nome + " Diz: " + texto;
         System.out.println("mensagem original" + mensagemOriginal + " Chave: " + jTextFieldChave.getText());
         byte[] criptografado = null;
         try {
             criptografado = criptografia.criptografar(mensagemOriginal, jTextFieldChave.getText());
-            System.out.println("criptografado: "+ criptografado);
+            System.out.println("criptografado: " + Arrays.toString(criptografado));
             String descriptografado = criptografia.descriptografar(criptografado, jTextFieldChave.getText());
-            System.out.println("Descriptografado no try:"+ descriptografado);
+            System.out.println("Descriptografado no try:" + descriptografado);
         } catch (Exception ex) {
             Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("pau no criptografar");
-        }
-        for (int i = 0; i < criptografado.length; i++) {
-            System.out.print(new Integer(criptografado[i]));
         }
 
         enviarMensagem(criptografado);

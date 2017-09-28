@@ -8,7 +8,7 @@ package com.mycompany.saladebatepapo;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.nio.charset.Charset;
+import java.util.Arrays;
 
 /**
  *
@@ -44,22 +44,14 @@ public class ConectarThread extends Thread {
             socket.joinGroup(group);
             buffer = new byte[1000];
             pacote = new DatagramPacket(buffer, buffer.length);
-            String msg = nome + " Entrou na sala!";
-            byte[] data = msg.getBytes();
-            DatagramPacket msgOut = new DatagramPacket(data, data.length, group, porta);
-            System.out.println("aqui " + new String(data));
-           // socket.send(msgOut);
-
+  
             while (true) {
                 buffer = new byte[1024];
                 pacote = new DatagramPacket(buffer, buffer.length);
                 socket.receive(pacote);
-                System.out.println("chave thread: " + chave);
                
 
-                String recebido = new String(pacote.getData(), 0, pacote.getLength());
-                System.out.println("recebido"+recebido);
-                byte[] mensagemBytes = recebido.getBytes();
+                byte mensagemBytes[] = Arrays.copyOf(pacote.getData(), pacote.getLength());
                 String mensagem = criptografia.descriptografar(mensagemBytes, chave);
 
                 sala.inserirTexto(new String(mensagem));
