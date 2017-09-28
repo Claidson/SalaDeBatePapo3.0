@@ -4,7 +4,7 @@
  * and open the template in the editor.
 //http://manifesto.blog.br/2.0/Java/java-aes
  */
-package com.mycompany.saladebatepapo;
+package br.edu.ifsc.saladebatepapo;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
