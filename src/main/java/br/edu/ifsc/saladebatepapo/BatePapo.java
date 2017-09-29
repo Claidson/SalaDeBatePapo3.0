@@ -27,7 +27,7 @@ public class BatePapo extends javax.swing.JFrame {
     ConectarThread conectar;
     DefaultListModel listModel;
     CriptografiaAES criptografia;
-    Boolean conectou ;
+    Boolean conectou;
 
     public BatePapo() {
         initComponents();
@@ -214,7 +214,7 @@ public class BatePapo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
         } else if (Integer.parseInt(jTextFieldPorta.getText()) < 1 || Integer.parseInt(jTextFieldPorta.getText()) > 65535) {
             JOptionPane.showMessageDialog(null, "Porta deve ser entre 1 - 65535");
-        } else if (jTextFieldChave.getText().length()>16) {
+        } else if (jTextFieldChave.getText().length() > 16) {
             JOptionPane.showMessageDialog(null, "Tamanho máximo da chave é 16 caracteres");
         } else {
             System.out.println("Conectado");
@@ -223,9 +223,9 @@ public class BatePapo extends javax.swing.JFrame {
             listModel = new DefaultListModel();
             jListBatePapo.setModel(listModel);
             conectar.start();
-           
+
             conectou = true;
-            System.out.println("conectou: "+conectou);
+            System.out.println("conectou: " + conectou);
             String nome = jTextFieldNome.getText();
             String texto = "Entrou na sala";
             prepararMensagem(nome, texto);
@@ -235,12 +235,18 @@ public class BatePapo extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEntrarActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
+
+        if (conectou) {
+            String nome = jTextFieldNome.getText();
+            String texto = "Saiu da sala";
+            prepararMensagem(nome, texto);
+            conectar.interrupt();
+            conectou = false;
+        } else {
+            JOptionPane.showMessageDialog(null, "Entre na sala primeiro!");
+        }
         // TODO add your handling code here:
-        String nome = jTextFieldNome.getText();
-        String texto = "Saiu da sala";
-        prepararMensagem(nome, texto);
-        conectar.interrupt();
-        conectou = false;
+
     }//GEN-LAST:event_jButtonSairActionPerformed
 
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
@@ -249,7 +255,7 @@ public class BatePapo extends javax.swing.JFrame {
                 || jTextFieldNome.getText().equals("") || jTextFieldPorta.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
         } else if (conectou) {
-            System.out.println("conectou enviar: "+conectou);
+            System.out.println("conectou enviar: " + conectou);
             String nome = jTextFieldNome.getText();
             String texto = jTextFieldMensagem.getText();
             prepararMensagem(nome, texto);
