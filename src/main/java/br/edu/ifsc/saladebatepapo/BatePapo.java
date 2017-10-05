@@ -240,7 +240,7 @@ public class BatePapo extends javax.swing.JFrame {
             String nome = jTextFieldNome.getText();
             String texto = "Saiu da sala";
             prepararMensagem(nome, texto);
-            conectar.interrupt();
+            conectar.parar();
             conectou = false;
         } else {
             JOptionPane.showMessageDialog(null, "Entre na sala primeiro!");

@@ -24,6 +24,7 @@ public class ConectarThread extends Thread {
     byte[] buffer;
     DatagramPacket pacote;
     CriptografiaAES criptografia = new CriptografiaAES();
+    Boolean stop = true;
 
     public ConectarThread(int porta, String nome, BatePapo sala, String grupo, String chave) {
         this.porta = porta;
@@ -36,6 +37,9 @@ public class ConectarThread extends Thread {
     public void enviarMensagem() {
 
     }
+    public void parar(){
+        stop = false;
+    }
 
     public void run() {
         try {
@@ -45,7 +49,7 @@ public class ConectarThread extends Thread {
             buffer = new byte[1000];
             pacote = new DatagramPacket(buffer, buffer.length);
   
-            while (true) {
+            while (stop) {
                 buffer = new byte[1024];
                 pacote = new DatagramPacket(buffer, buffer.length);
                 socket.receive(pacote);
