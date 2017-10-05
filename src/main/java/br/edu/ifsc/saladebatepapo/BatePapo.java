@@ -290,18 +290,7 @@ public class BatePapo extends javax.swing.JFrame {
     }
 
     public void enviarMensagem(byte[] data) {
-        try {
-
-            int port = Integer.parseInt(jTextFieldPorta.getText());
-            InetAddress group = InetAddress.getByName(jTextFieldGrupo.getText());
-            MulticastSocket socket = new MulticastSocket(port);
-            socket.joinGroup(group);
-            // byte[] data = texto.getBytes();
-            DatagramPacket msgOut = new DatagramPacket(data, data.length, group, port);
-            socket.send(msgOut);
-        } catch (IOException e) {
-
-        }
+        conectar.enviarMensagem(data);
     }
 
     /**

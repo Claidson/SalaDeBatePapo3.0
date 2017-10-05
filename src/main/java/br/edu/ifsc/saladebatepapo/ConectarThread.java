@@ -5,10 +5,14 @@
  */
 package br.edu.ifsc.saladebatepapo;
 
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,6 +29,9 @@ public class ConectarThread extends Thread {
     DatagramPacket pacote;
     CriptografiaAES criptografia = new CriptografiaAES();
     Boolean stop = true;
+    MulticastSocket socket;
+    DatagramPacket msgOut;
+    
 
     public ConectarThread(int porta, String nome, BatePapo sala, String grupo, String chave) {
         this.porta = porta;
@@ -32,10 +39,17 @@ public class ConectarThread extends Thread {
         this.sala = sala;
         this.grupo = grupo;
         this.chave = chave;
+        
     }
 
-    public void enviarMensagem() {
-
+    public void enviarMensagem(byte[] data) {
+        
+        try {
+            msgOut = new DatagramPacket(data, data.length, InetAddress.getByName(grupo), porta);
+            socket.send(msgOut);
+        } catch (IOException ex) {
+            System.out.println("ConectarThread - deu pal para enviar mensagem");
+        }
     }
     public void parar(){
         stop = false;
@@ -44,7 +58,7 @@ public class ConectarThread extends Thread {
     public void run() {
         try {
             InetAddress group = InetAddress.getByName(grupo);
-            MulticastSocket socket = new MulticastSocket(porta);
+            socket = new MulticastSocket(porta);
             socket.joinGroup(group);
             buffer = new byte[1000];
             pacote = new DatagramPacket(buffer, buffer.length);
@@ -64,7 +78,7 @@ public class ConectarThread extends Thread {
             }
 
         } catch (Exception e) {
-            System.out.println("Deu pal no ConectarThread :" + e);
+            System.out.println("Deu pal no ConectarThread RUN():" + e);
         }
     }
 }
