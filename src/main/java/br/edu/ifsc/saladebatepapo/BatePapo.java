@@ -53,9 +53,9 @@ public class BatePapo extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextFieldGrupo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextFieldChave = new javax.swing.JTextField();
         jButtonEntrar = new javax.swing.JButton();
         jButtonSair = new javax.swing.JButton();
+        jTextFieldChave = new javax.swing.JPasswordField();
         jPanel2 = new javax.swing.JPanel();
         jTextFieldMensagem = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -76,15 +76,6 @@ public class BatePapo extends javax.swing.JFrame {
 
         jLabel4.setText("Chave AES");
 
-        jTextFieldChave.setColumns(16);
-        jTextFieldChave.setText("raioperinzador17");
-        jTextFieldChave.setToolTipText("Tamanho máximo 16 caracteres");
-        jTextFieldChave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldChaveActionPerformed(evt);
-            }
-        });
-
         jButtonEntrar.setText("Entrar");
         jButtonEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,6 +89,8 @@ public class BatePapo extends javax.swing.JFrame {
                 jButtonSairActionPerformed(evt);
             }
         });
+
+        jTextFieldChave.setText("raioperinzador17");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -119,14 +112,14 @@ public class BatePapo extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jTextFieldGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonEntrar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jTextFieldChave, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonSair, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
@@ -145,12 +138,14 @@ public class BatePapo extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jTextFieldPorta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4)
-                        .addComponent(jTextFieldChave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButtonSair))
+                        .addComponent(jButtonSair)
+                        .addComponent(jTextFieldChave))
                     .addComponent(jLabel2))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
+        jListBatePapo.setEnabled(false);
+        jListBatePapo.setFocusable(false);
         jScrollPane1.setViewportView(jListBatePapo);
 
         jButtonEnviar.setText("Enviar");
@@ -203,10 +198,6 @@ public class BatePapo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldChaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldChaveActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldChaveActionPerformed
-
     private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
         // TODO add your handling code here:
         if (jTextFieldChave.getText().equals("") || jTextFieldGrupo.getText().equals("")
@@ -229,6 +220,7 @@ public class BatePapo extends javax.swing.JFrame {
             String nome = jTextFieldNome.getText();
             String texto = "Entrou na sala";
             prepararMensagem(nome, texto);
+            habilitaCampos();
 
         }
 
@@ -242,6 +234,7 @@ public class BatePapo extends javax.swing.JFrame {
             prepararMensagem(nome, texto);
             conectar.parar();
             conectou = false;
+            habilitaCampos();
         } else {
             JOptionPane.showMessageDialog(null, "Entre na sala primeiro!");
         }
@@ -293,6 +286,13 @@ public class BatePapo extends javax.swing.JFrame {
         conectar.enviarMensagem(data);
     }
 
+    public void habilitaCampos() {
+        jTextFieldChave.setEnabled(!jTextFieldChave.isEnabled());
+        jTextFieldGrupo.setEnabled(!jTextFieldGrupo.isEnabled());
+        jTextFieldNome.setEnabled(!jTextFieldNome.isEnabled());
+        jTextFieldPorta.setEnabled(!jTextFieldPorta.isEnabled());
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -340,7 +340,7 @@ public class BatePapo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextFieldChave;
+    private javax.swing.JPasswordField jTextFieldChave;
     private javax.swing.JTextField jTextFieldGrupo;
     private javax.swing.JTextField jTextFieldMensagem;
     private javax.swing.JTextField jTextFieldNome;
