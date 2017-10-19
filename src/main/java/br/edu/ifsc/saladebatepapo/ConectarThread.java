@@ -9,7 +9,10 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author aluno
@@ -48,7 +51,15 @@ public class ConectarThread extends Thread {
         }
     }
     public void parar(){
-        stop = false;
+        try {
+            socket.leaveGroup(InetAddress.getByName(grupo));
+            socket.close();
+            stop = false;
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(ConectarThread.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ConectarThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void run() {
