@@ -43,6 +43,7 @@ public class CriptografiaRSA {
         final KeyPairGenerator keyGen = KeyPairGenerator.getInstance(ALGORITHM);
         keyGen.initialize(1024);
         final KeyPair key = keyGen.generateKeyPair();
+     
    
         File chavePrivadaFile = new File(PATH_CHAVE_PRIVADA);
         File chavePublicaFile = new File(PATH_CHAVE_PUBLICA);
