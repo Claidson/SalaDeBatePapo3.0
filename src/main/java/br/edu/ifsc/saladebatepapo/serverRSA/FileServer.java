@@ -72,9 +72,9 @@ public class FileServer {
             Socket sock = servsock.accept();
             System.out.println("Conexão aceita: " + sock);
             // envia o arquivo (transforma em byte array)
-            File myFile = new File(CriptografiaRSA.PATH_CHAVE_PUBLICA);
-            byte[] mybytearray = new byte[(int) myFile.length()];
-            FileInputStream fis = new FileInputStream(myFile);
+            File arquivo = new File(CriptografiaRSA.PATH_CHAVE_PUBLICA);
+            byte[] mybytearray = new byte[(int) arquivo.length()];
+            FileInputStream fis = new FileInputStream(arquivo);
             BufferedInputStream bis = new BufferedInputStream(fis);
             bis.read(mybytearray, 0, mybytearray.length);
             OutputStream os = sock.getOutputStream();
