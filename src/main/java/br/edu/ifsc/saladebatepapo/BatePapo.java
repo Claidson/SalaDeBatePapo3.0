@@ -5,11 +5,15 @@
  */
 package br.edu.ifsc.saladebatepapo;
 
+import static br.edu.ifsc.saladebatepapo.CriptografiaRSA.PATH_CHAVE_PRIVADA;
+import br.edu.ifsc.saladebatepapo.serverRSA.FileServer;
 import java.awt.Color;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
+import java.io.ObjectInputStream;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,10 +33,15 @@ public class BatePapo extends javax.swing.JFrame {
     DefaultListModel listModel;
     CriptografiaAES criptografia;
     Boolean conectou;
+    FileServer arquivoRSA;
+    byte[] chaveAES;
+    String chaveAESTexto = "RaioPerinzador17";
+    String chaveDescripgrafada;
 
     public BatePapo() {
         initComponents();
         criptografia = new CriptografiaAES();
+        arquivoRSA = new FileServer();
         conectou = false;
         getRootPane().setDefaultButton(jButtonEnviar);
     }
@@ -56,9 +65,9 @@ public class BatePapo extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButtonEntrar = new javax.swing.JButton();
         jButtonSair = new javax.swing.JButton();
-        jTextFieldChave = new javax.swing.JPasswordField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
+        jTextFieldIP = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jTextFieldMensagem = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -77,7 +86,7 @@ public class BatePapo extends javax.swing.JFrame {
 
         jTextFieldGrupo.setText("228.5.6.7");
 
-        jLabel4.setText("Chave AES");
+        jLabel4.setText("IP Servidor chaves");
 
         jButtonEntrar.setText("Entrar");
         jButtonEntrar.addActionListener(new java.awt.event.ActionListener() {
@@ -94,8 +103,6 @@ public class BatePapo extends javax.swing.JFrame {
             }
         });
 
-        jTextFieldChave.setText("raioperinzador17");
-
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Padrão", "Dark", "Matrix" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,6 +111,13 @@ public class BatePapo extends javax.swing.JFrame {
         });
 
         jLabel5.setText("Skin");
+
+        jTextFieldIP.setText("localhost");
+        jTextFieldIP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldIPActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -132,15 +146,13 @@ public class BatePapo extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextFieldGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonEntrar))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextFieldChave, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonSair, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(36, Short.MAX_VALUE))
+                            .addComponent(jTextFieldIP)
+                            .addComponent(jTextFieldGrupo, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonEntrar, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButtonSair, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,7 +174,7 @@ public class BatePapo extends javax.swing.JFrame {
                         .addComponent(jTextFieldPorta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4)
                         .addComponent(jButtonSair)
-                        .addComponent(jTextFieldChave))
+                        .addComponent(jTextFieldIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -195,7 +207,7 @@ public class BatePapo extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jTextFieldMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonEnviar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jButtonEnviar, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -227,52 +239,9 @@ public class BatePapo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
-        // TODO add your handling code here:
-        if (jTextFieldChave.getText().equals("") || jTextFieldGrupo.getText().equals("")
-                || jTextFieldNome.getText().equals("") || jTextFieldPorta.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
-        } else if (Integer.parseInt(jTextFieldPorta.getText()) < 1 || Integer.parseInt(jTextFieldPorta.getText()) > 65535) {
-            JOptionPane.showMessageDialog(null, "Porta deve ser entre 1 - 65535");
-        } else if (jTextFieldChave.getText().length() > 16) {
-            JOptionPane.showMessageDialog(null, "Tamanho máximo da chave é 16 caracteres");
-        } else {
-            System.out.println("Conectado");
-            conectar = new ConectarThread(Integer.parseInt(jTextFieldPorta.getText()),
-                    jTextFieldNome.getText(), this, jTextFieldGrupo.getText(), jTextFieldChave.getText());
-            listModel = new DefaultListModel();
-            jListBatePapo.setModel(listModel);
-            conectar.start();
-
-            conectou = true;
-            System.out.println("conectou: " + conectou);
-            String nome = jTextFieldNome.getText();
-            String texto = "Entrou na sala";
-            prepararMensagem(nome, texto);
-            habilitaCampos();
-        }
-
-    }//GEN-LAST:event_jButtonEntrarActionPerformed
-
-    private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
-
-        if (conectou) {
-            String nome = jTextFieldNome.getText();
-            String texto = "Saiu da sala";
-            prepararMensagem(nome, texto);
-            conectar.parar();
-            conectou = false;
-            habilitaCampos();
-        } else {
-            JOptionPane.showMessageDialog(null, "Entre na sala primeiro!");
-        }
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jButtonSairActionPerformed
-
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
 
-        if (jTextFieldChave.getText().equals("") || jTextFieldGrupo.getText().equals("")
+        if (jTextFieldGrupo.getText().equals("")
                 || jTextFieldNome.getText().equals("") || jTextFieldPorta.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
         } else if (conectou) {
@@ -294,10 +263,13 @@ public class BatePapo extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextFieldMensagemKeyPressed
 
+    private void jTextFieldIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldIPActionPerformed
+
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-        
-        
+
         Color corFundo = Color.BLACK;
         Color corFonte = Color.WHITE;
         jPanel1.setBackground(corFundo);
@@ -309,8 +281,93 @@ public class BatePapo extends javax.swing.JFrame {
         jLabel5.setForeground(corFonte);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
+
+        if (conectou) {
+            String nome = jTextFieldNome.getText();
+            String texto = "Saiu da sala";
+            prepararMensagem(nome, texto);
+            conectar.parar();
+            conectou = false;
+            habilitaCampos();
+        } else {
+            JOptionPane.showMessageDialog(null, "Entre na sala primeiro!");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSairActionPerformed
+
+    private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
+        // TODO add your handling code here:
+        if (jTextFieldGrupo.getText().equals("")
+                || jTextFieldNome.getText().equals("") || jTextFieldPorta.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+        } else if (Integer.parseInt(jTextFieldPorta.getText()) < 1 || Integer.parseInt(jTextFieldPorta.getText()) > 65535) {
+            JOptionPane.showMessageDialog(null, "Porta deve ser entre 1 - 65535");
+
+        } else {
+                        try {
+                            arquivoRSA.enviarECriptografar();
+                            
+                        } catch (IOException ex) {
+                            Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+                            System.out.println("Pau ao enviar rsa");
+                        }
+            try {
+                arquivoRSA.receber(jTextFieldIP.getText());
+                criptografaRSA(chaveAESTexto, "chaveConexaoRecebida.key");
+                System.out.println("Chave pura: " + chaveAESTexto);
+                System.out.println("byte " + chaveAES.toString());
+
+                chaveDescripgrafada = descriptografaRSA();
+                System.out.println("Chave descriptografada: " + chaveDescripgrafada);
+            } catch (IOException ex) {
+                Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            conectar = new ConectarThread(Integer.parseInt(jTextFieldPorta.getText()),
+                    jTextFieldNome.getText(), this, jTextFieldGrupo.getText(), chaveDescripgrafada);
+            System.out.println("Conectado");
+            listModel = new DefaultListModel();
+            jListBatePapo.setModel(listModel);
+            conectar.start();
+
+            conectou = true;
+            System.out.println("conectou: " + conectou);
+            String nome = jTextFieldNome.getText();
+            String texto = "Entrou na sala";
+            prepararMensagem(nome, texto);
+            habilitaCampos();
+        }
+    }//GEN-LAST:event_jButtonEntrarActionPerformed
+
     public void inserirTexto(String texto) {
         listModel.addElement(texto);
+
+    }
+
+    public void criptografaRSA(String msgOriginal, String ArquivoChavePublica) throws FileNotFoundException, IOException, ClassNotFoundException {
+
+        ObjectInputStream inputStream = null;
+
+        // Criptografa a Mensagem usando a Chave Pública
+        inputStream = new ObjectInputStream(new FileInputStream(ArquivoChavePublica));
+        PublicKey chavePublica = (PublicKey) inputStream.readObject();
+        chaveAES = CriptografiaRSA.criptografa(msgOriginal, chavePublica);
+    }
+
+    public String descriptografaRSA() throws FileNotFoundException, IOException, ClassNotFoundException {
+
+        ObjectInputStream inputStreamChavePrivada = null; 
+        ObjectInputStream inputStreamArquivoChave = null;
+
+        // Decriptografa a Mensagem usando a Chave Privada
+        inputStreamChavePrivada = new ObjectInputStream(new FileInputStream(PATH_CHAVE_PRIVADA));
+        PrivateKey chavePrivada = (PrivateKey) inputStreamChavePrivada.readObject();
+        
+        String textoPuro = CriptografiaRSA.decriptografa(chaveAES, chavePrivada);
+        return textoPuro;
 
     }
 
@@ -318,12 +375,12 @@ public class BatePapo extends javax.swing.JFrame {
 
         String mensagemOriginal;
         mensagemOriginal = nome + " Diz: " + texto;
-        System.out.println("mensagem original" + mensagemOriginal + " Chave: " + jTextFieldChave.getText());
+        System.out.println("mensagem original" + mensagemOriginal + " Chave: " + chaveDescripgrafada);
         byte[] criptografado = null;
         try {
-            criptografado = criptografia.criptografar(mensagemOriginal, jTextFieldChave.getText());
+            criptografado = criptografia.criptografar(mensagemOriginal, chaveDescripgrafada);
             System.out.println("criptografado: " + Arrays.toString(criptografado));
-            String descriptografado = criptografia.descriptografar(criptografado, jTextFieldChave.getText());
+            String descriptografado = criptografia.descriptografar(criptografado, chaveDescripgrafada);
             System.out.println("Descriptografado no try:" + descriptografado);
         } catch (Exception ex) {
             Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
@@ -339,7 +396,7 @@ public class BatePapo extends javax.swing.JFrame {
     }
 
     public void habilitaCampos() {
-        jTextFieldChave.setEnabled(!jTextFieldChave.isEnabled());
+
         jTextFieldGrupo.setEnabled(!jTextFieldGrupo.isEnabled());
         jTextFieldNome.setEnabled(!jTextFieldNome.isEnabled());
         jTextFieldPorta.setEnabled(!jTextFieldPorta.isEnabled());
@@ -396,8 +453,8 @@ public class BatePapo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPasswordField jTextFieldChave;
     private javax.swing.JTextField jTextFieldGrupo;
+    private javax.swing.JTextField jTextFieldIP;
     private javax.swing.JTextField jTextFieldMensagem;
     private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JTextField jTextFieldPorta;

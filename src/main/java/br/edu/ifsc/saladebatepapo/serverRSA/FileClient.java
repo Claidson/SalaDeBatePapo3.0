@@ -14,23 +14,7 @@ public class FileClient {
         Socket sock = new Socket("localhost", 50000);
        // DataOutputStream out = new DataOutputStream(sock.getOutputStream());
 
-        /*
-    
-         System.out.println("Conexão aceita: " + sock);
-         // envia o arquivo (transforma em byte array)
-         File arquivo = new File (PATH_CHAVE_PUBLICA);
-         System.out.println("Caminho: " + arquivo.getPath()+ "Conteudo: "+ arquivo.toString());
-         byte [] mybytearray  = new byte [(int)arquivo.length()];
-         FileInputStream fis = new FileInputStream(arquivo);
-         BufferedInputStream bis = new BufferedInputStream(fis);
-         bis.read(mybytearray,0,mybytearray.length);
-         OutputStream os = sock.getOutputStream();
-         System.out.println("Enviando...");
-         os.write(mybytearray,0,mybytearray.length);
-         os.flush();
-         // sock.close();
-      
-         */
+  
         // recebendo o arquivo
         byte[] mybytearrayRecebido = new byte[filesize];
         InputStream is = sock.getInputStream();

@@ -71,20 +71,17 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="jTextFieldGrupo" min="-2" pref="249" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jButtonEntrar" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="jTextFieldChave" min="-2" pref="249" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jButtonSair" min="-2" pref="76" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jTextFieldIP" max="32767" attributes="0"/>
+                              <Component id="jTextFieldGrupo" pref="249" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jButtonEntrar" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButtonSair" alignment="1" min="-2" pref="76" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="36" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -110,7 +107,7 @@
                           <Component id="jTextFieldPorta" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButtonSair" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldChave" alignment="3" max="32767" attributes="0"/>
+                          <Component id="jTextFieldIP" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -149,7 +146,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Chave AES"/>
+            <Property name="text" type="java.lang.String" value="IP Servidor chaves"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonEntrar">
@@ -168,11 +165,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSairActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JPasswordField" name="jTextFieldChave">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="raioperinzador17"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox1">
           <Properties>
@@ -196,6 +188,14 @@
             <Property name="text" type="java.lang.String" value="Skin"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldIP">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="localhost"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldIPActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel2">
@@ -210,7 +210,7 @@
                       <Group type="102" attributes="0">
                           <Component id="jTextFieldMensagem" min="-2" pref="544" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButtonEnviar" max="32767" attributes="0"/>
+                          <Component id="jButtonEnviar" pref="174" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
