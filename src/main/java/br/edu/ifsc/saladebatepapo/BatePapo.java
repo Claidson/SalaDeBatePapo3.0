@@ -6,7 +6,7 @@
 package br.edu.ifsc.saladebatepapo;
 
 import static br.edu.ifsc.saladebatepapo.CriptografiaRSA.PATH_CHAVE_PRIVADA;
-import br.edu.ifsc.saladebatepapo.serverRSA.FileServer;
+import br.edu.ifsc.saladebatepapo.serverRSA.ClientChaves;
 import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,7 +33,7 @@ public class BatePapo extends javax.swing.JFrame {
     DefaultListModel listModel;
     CriptografiaAES criptografia;
     Boolean conectou;
-    FileServer arquivoRSA;
+    ClientChaves arquivoRSA;
     byte[] chaveAES;
     String chaveAESTexto = "RaioPerinzador17";
     String chaveDescripgrafada;
@@ -41,7 +41,7 @@ public class BatePapo extends javax.swing.JFrame {
     public BatePapo() {
         initComponents();
         criptografia = new CriptografiaAES();
-        arquivoRSA = new FileServer();
+        arquivoRSA = new ClientChaves();
         conectou = false;
         getRootPane().setDefaultButton(jButtonEnviar);
     }
