@@ -304,16 +304,16 @@ public class BatePapo extends javax.swing.JFrame {
         } else if (Integer.parseInt(jTextFieldPorta.getText()) < 1 || Integer.parseInt(jTextFieldPorta.getText()) > 65535) {
             JOptionPane.showMessageDialog(null, "Porta deve ser entre 1 - 65535");
 
-        } else {
-                        try {
-                            arquivoRSA.enviarECriptografar();
-                            
-                        } catch (IOException ex) {
-                            Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
-                            System.out.println("Pau ao enviar rsa");
-                        }
+//        } else {
+//                        try {
+//                            arquivoRSA.enviarECriptografar();
+//                            
+//                        } catch (IOException ex) {
+//                            Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+//                            System.out.println("Pau ao enviar rsa");
+//                        }
             try {
-                arquivoRSA.receber(jTextFieldIP.getText());
+                arquivoRSA.receberArquivo(jTextFieldIP.getText());
                 criptografaRSA(chaveAESTexto, "chaveConexaoRecebida.key");
                 System.out.println("Chave pura: " + chaveAESTexto);
                 System.out.println("byte " + chaveAES.toString());
