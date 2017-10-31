@@ -33,15 +33,15 @@ public class BatePapo extends javax.swing.JFrame {
     DefaultListModel listModel;
     CriptografiaAES criptografia;
     Boolean conectou;
-    ClientChaves arquivoRSA;
+    ClientChaves clientRSA;
     byte[] chaveAES;
-    String chaveAESTexto = "RaioPerinzador17";
+
     String chaveDescripgrafada;
 
     public BatePapo() {
         initComponents();
         criptografia = new CriptografiaAES();
-        arquivoRSA = new ClientChaves();
+        clientRSA = new ClientChaves();
         conectou = false;
         getRootPane().setDefaultButton(jButtonEnviar);
     }
@@ -302,44 +302,43 @@ public class BatePapo extends javax.swing.JFrame {
                 || jTextFieldNome.getText().equals("") || jTextFieldPorta.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
         } else if (Integer.parseInt(jTextFieldPorta.getText()) < 1 || Integer.parseInt(jTextFieldPorta.getText()) > 65535) {
-            JOptionPane.showMessageDialog(null, "Porta deve ser entre 1 - 65535");
+            JOptionPane.showMessageDialog(null, "Porta deve ser entre 1 - 65535");}
+        else{
 
-//        } else {
-//                        try {
-//                            arquivoRSA.enviarECriptografar();
-//                            
-//                        } catch (IOException ex) {
-//                            Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
-//                            System.out.println("Pau ao enviar rsa");
-//                        }
             try {
-                arquivoRSA.receberArquivo(jTextFieldIP.getText());
-                criptografaRSA(chaveAESTexto, "chaveConexaoRecebida.key");
-                System.out.println("Chave pura: " + chaveAESTexto);
-                System.out.println("byte " + chaveAES.toString());
+                 System.out.println("vai ir a chave");
+                clientRSA.enviaChave();
+                System.out.println("Foi a chave");
 
-                chaveDescripgrafada = descriptografaRSA();
+                Thread.sleep(2000);
+
+                System.out.println("aki antes de receber");
+                clientRSA.receberArquivo();
+                System.out.println("depois antes de receber");
+                String chaveDescripgrafada = descriptografaRSA();
                 System.out.println("Chave descriptografada: " + chaveDescripgrafada);
             } catch (IOException ex) {
                 Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
             }
+                conectar = new ConectarThread(Integer.parseInt(jTextFieldPorta.getText()),
+                        jTextFieldNome.getText(), this, jTextFieldGrupo.getText(), chaveDescripgrafada);
+                System.out.println("Conectado");
+                listModel = new DefaultListModel();
+                jListBatePapo.setModel(listModel);
+                conectar.start();
 
-            conectar = new ConectarThread(Integer.parseInt(jTextFieldPorta.getText()),
-                    jTextFieldNome.getText(), this, jTextFieldGrupo.getText(), chaveDescripgrafada);
-            System.out.println("Conectado");
-            listModel = new DefaultListModel();
-            jListBatePapo.setModel(listModel);
-            conectar.start();
-
-            conectou = true;
-            System.out.println("conectou: " + conectou);
-            String nome = jTextFieldNome.getText();
-            String texto = "Entrou na sala";
-            prepararMensagem(nome, texto);
-            habilitaCampos();
-        }
+                conectou = true;
+                System.out.println("conectou: " + conectou);
+                String nome = jTextFieldNome.getText();
+                String texto = "Entrou na sala";
+                prepararMensagem(nome, texto);
+                habilitaCampos();
+            }
+        
     }//GEN-LAST:event_jButtonEntrarActionPerformed
 
     public void inserirTexto(String texto) {
@@ -359,14 +358,15 @@ public class BatePapo extends javax.swing.JFrame {
 
     public String descriptografaRSA() throws FileNotFoundException, IOException, ClassNotFoundException {
 
-        ObjectInputStream inputStreamChavePrivada = null; 
+        ObjectInputStream inputStreamChavePrivada = null;
         ObjectInputStream inputStreamArquivoChave = null;
 
         // Decriptografa a Mensagem usando a Chave Privada
         inputStreamChavePrivada = new ObjectInputStream(new FileInputStream(PATH_CHAVE_PRIVADA));
+        inputStreamArquivoChave = new ObjectInputStream(new FileInputStream("chaveConexaoCriptografada.key"));
         PrivateKey chavePrivada = (PrivateKey) inputStreamChavePrivada.readObject();
-        
-        String textoPuro = CriptografiaRSA.decriptografa(chaveAES, chavePrivada);
+        byte[] criptografado = (byte[]) inputStreamArquivoChave.readObject();
+        String textoPuro = CriptografiaRSA.decriptografa(criptografado, chavePrivada);
         return textoPuro;
 
     }

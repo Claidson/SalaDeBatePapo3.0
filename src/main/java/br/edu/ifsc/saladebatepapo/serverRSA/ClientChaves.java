@@ -18,7 +18,7 @@ public class ClientChaves {
 
     public String chaveCriptogtafada;
     
-    public void enviar() throws IOException {
+    /*public void enviar() throws IOException {
         // cria o nosso socket
         ServerSocket servsock = new ServerSocket(50000);
         while (true) {
@@ -35,9 +35,9 @@ public class ClientChaves {
             os.write(mybytearray, 0, mybytearray.length);
             os.flush();
             sock.close();
+            receberArquivo();
         }
-    }
-
+    }*/
     public void enviaChave() throws IOException {
 
         // cria o nosso socket
@@ -55,18 +55,20 @@ public class ClientChaves {
         System.out.println("Enviando...");
         os.write(mybytearray, 0, mybytearray.length);
         os.flush();
-        receberArquivo(sock);
-        System.out.println("Chave criptografada in: "+ chaveCriptogtafada);
-        sock.close();
-
+       //receberArquivo(sock);
+       
+         sock.close();
+         System.out.println("saindo do enviar a chave: " );
+        //receberArquivo(sock);
     }
-    public void receberArquivo(Socket sock) throws IOException {
+    public void receberArquivo() throws IOException {
+        System.out.println("Entrou para receber o arquivo criptografado");
         int tamanho = 6022386;
 
         int bytesRead;
         int current = 0;
-        // Socket sock = new Socket("10.151.34.51", 50000);
-       
+       Socket sock = new Socket("localhost", 50001);
+        //Socket sock = new Socket("10.151.34.51", 50000);
 
         // recebendo o arquivo
         byte[] mybytearrayRecebido = new byte[tamanho];
@@ -84,9 +86,10 @@ public class ClientChaves {
             }
         } while (bytesRead > -1);
         bos.write(mybytearrayRecebido, 0, current);
+        
         System.out.println("recebido: " + bos.toString());
         bos.close();
-        //sock.close();
+        sock.close();
     }
 
     
@@ -94,6 +97,13 @@ public class ClientChaves {
     public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
         ClientChaves file = new ClientChaves();
         file.enviaChave();
+        System.out.println("Enviou");
+        try{
+            Thread.sleep(2000);
+        }catch(Exception e){
+            System.out.println("demoro");
+        }
+        file.receberArquivo();
 
    
     }
