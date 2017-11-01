@@ -94,9 +94,10 @@ public class ServidorDeChave {
         System.out.println("Conexão aceita: " + sock);
        // File arquivo = new File(CriptografiaRSA.PATH_CHAVE_PUBLICA);
         byte[] mybytearray = criptografaRSA();
+        System.out.println("array de bytes: "+ mybytearray.toString());
        
         OutputStream os = sock.getOutputStream();
-        System.out.println("Enviando...");
+        System.out.println("Enviando criptografado...");
         os.write(mybytearray, 0, mybytearray.length);
         os.flush();
 

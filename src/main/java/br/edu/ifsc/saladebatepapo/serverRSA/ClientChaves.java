@@ -38,7 +38,7 @@ public class ClientChaves {
             receberArquivo();
         }
     }*/
-    public void enviaChave() throws IOException {
+    public void enviaChavePublica() throws IOException {
 
         // cria o nosso socket
 //        ServerSocket servsock = new ServerSocket(50000);
@@ -61,7 +61,7 @@ public class ClientChaves {
          System.out.println("saindo do enviar a chave: " );
         //receberArquivo(sock);
     }
-    public void receberArquivo() throws IOException {
+    public void receberArquivoCriptografado() throws IOException {
         System.out.println("Entrou para receber o arquivo criptografado");
         int tamanho = 6022386;
 
@@ -96,14 +96,14 @@ public class ClientChaves {
 
     public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
         ClientChaves file = new ClientChaves();
-        file.enviaChave();
+        file.enviaChavePublica();
         System.out.println("Enviou");
         try{
             Thread.sleep(2000);
         }catch(Exception e){
             System.out.println("demoro");
         }
-        file.receberArquivo();
+        file.receberArquivoCriptografado();
 
    
     }
