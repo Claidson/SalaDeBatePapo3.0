@@ -374,6 +374,19 @@ public class BatePapo extends javax.swing.JFrame {
 
     }
 
+    public byte[] getBytes(File file) {
+        int len = (int) file.length();
+        byte[] sendBuf = new byte[len];
+        FileInputStream inFile = null;
+        try {
+            inFile = new FileInputStream(file);
+            inFile.read(sendBuf, 0, len);
+        } catch (FileNotFoundException fnfex) {
+        } catch (IOException ioex) {
+        }
+        return sendBuf;
+    }
+
     public void prepararMensagem(String nome, String texto) {
 
         String mensagemOriginal;
