@@ -6,8 +6,10 @@
 package br.edu.ifsc.saladebatepapo;
 
 import static br.edu.ifsc.saladebatepapo.CriptografiaRSA.PATH_CHAVE_PRIVADA;
+import static br.edu.ifsc.saladebatepapo.TESTE.getBytes;
 import br.edu.ifsc.saladebatepapo.serverRSA.ClientChaves;
 import java.awt.Color;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -307,17 +309,16 @@ public class BatePapo extends javax.swing.JFrame {
 
             try {
                 System.out.println("vai ir a chave");
-                clientRSA.enviaChave();
+                clientRSA.enviaChavePublica();
                 System.out.println("Foi a chave");
 
                 Thread.sleep(2000);
 
                 System.out.println("aki antes de receber");
-                clientRSA.receberArquivo();
-               
-                
+                clientRSA.receberArquivoCriptografado();
+
                 System.out.println("depois de receber");
-                String chaveDescripgrafada = descriptografaRSA();
+                chaveDescripgrafada = descriptografaRSA();
                 System.out.println("Chave descriptografada: " + chaveDescripgrafada);
             } catch (IOException ex) {
                 Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
@@ -361,14 +362,12 @@ public class BatePapo extends javax.swing.JFrame {
     public String descriptografaRSA() throws FileNotFoundException, IOException, ClassNotFoundException {
 
         ObjectInputStream inputStreamChavePrivada = null;
-        ObjectInputStream inputStreamArquivoChave = null;
         System.out.println("antes de ler os arquivos");
-        // Decriptografa a Mensagem usando a Chave Privada
         inputStreamChavePrivada = new ObjectInputStream(new FileInputStream(PATH_CHAVE_PRIVADA));
-        inputStreamArquivoChave = new ObjectInputStream(new FileInputStream("chaveConexaoCriptografada.key"));
         System.out.println("Leu os arquivos");
         PrivateKey chavePrivada = (PrivateKey) inputStreamChavePrivada.readObject();
-        byte[] criptografado = (byte[]) inputStreamArquivoChave.readObject();
+        File sourceFile = new File("chaveConexaoCriptografada.key");
+        byte[] criptografado = getBytes(sourceFile);
         String textoPuro = CriptografiaRSA.decriptografa(criptografado, chavePrivada);
         System.out.println("metodo de criptografar: " + textoPuro);
         return textoPuro;
