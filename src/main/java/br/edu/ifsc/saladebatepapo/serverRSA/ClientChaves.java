@@ -17,6 +17,8 @@ import java.io.*;
 public class ClientChaves {
 
     public String chaveCriptogtafada;
+    //String ip = "10.151.34.51";
+    String ip = "localhost";
     
     /*public void enviar() throws IOException {
         // cria o nosso socket
@@ -44,7 +46,7 @@ public class ClientChaves {
 //        ServerSocket servsock = new ServerSocket(50000);
 //        Socket sock = servsock.accept();
         // Socket sock = new Socket("10.151.34.51", 50000);
-        Socket sock = new Socket("localhost", 50000);
+        Socket sock = new Socket(ip, 50000);
         System.out.println("Conexão aceita para enviar: " + sock);
         File arquivo = new File(CriptografiaRSA.PATH_CHAVE_PUBLICA);
         byte[] mybytearray = new byte[(int) arquivo.length()];
@@ -67,7 +69,7 @@ public class ClientChaves {
 
         int bytesRead;
         int current = 0;
-       Socket sock = new Socket("localhost", 50001);
+       Socket sock = new Socket(ip, 50001);
         //Socket sock = new Socket("10.151.34.51", 50000);
 
         // recebendo o arquivo

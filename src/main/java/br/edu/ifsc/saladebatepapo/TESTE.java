@@ -21,22 +21,7 @@ import java.security.PublicKey;
  */
 public class TESTE {
 
-    public byte[] criptografaRSA() throws FileNotFoundException, IOException, ClassNotFoundException {
-
-//        Properties props = new Properties();
-//        InputStream in = getClass().getClassLoader().getResourceAsStream("chave.properties");
-//        props.load(in);
-//        in.close();
-//        String senha = props.getProperty("chave");
-        String senha = "RaioPerinzador17";
-        System.out.println("senha " + senha);
-        ObjectInputStream inputStream = null;
-
-        // Criptografa a Mensagem usando a Chave Pública
-        inputStream = new ObjectInputStream(new FileInputStream("chavePublicaRecebida.key"));
-        final PublicKey chavePublica = (PublicKey) inputStream.readObject();
-        return CriptografiaRSA.criptografa(senha, chavePublica);
-    }
+ 
     public static byte[] getBytes(File file) {
      int             len     = (int)file.length();  
       byte[]          sendBuf = new byte[len];
