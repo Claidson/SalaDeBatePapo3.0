@@ -4,6 +4,7 @@ import br.edu.ifsc.saladebatepapo.CriptografiaRSA;
 import java.net.*;
 import java.io.*;
 import java.security.PublicKey;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,12 +55,12 @@ public class ServidorDeChave extends Thread {
 
     public byte[] criptografaRSA() throws FileNotFoundException, IOException, ClassNotFoundException {
 
-//        Properties props = new Properties();
-//        InputStream in = getClass().getClassLoader().getResourceAsStream("chave.properties");
-//        props.load(in);
-//        in.close();
-//        String senha = props.getProperty("chave");
-        String senha = "RaioPerinzador18";
+        Properties props = new Properties();
+        FileInputStream arquivo = new FileInputStream(
+                "chave.properties");
+        props.load(arquivo);
+        arquivo.close();
+        String senha = props.getProperty("chave");
         System.out.println("senha " + senha);
         ObjectInputStream inputStream = null;
 
