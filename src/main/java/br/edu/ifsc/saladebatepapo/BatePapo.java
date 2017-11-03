@@ -9,6 +9,8 @@ import static br.edu.ifsc.saladebatepapo.CriptografiaRSA.PATH_CHAVE_PRIVADA;
 import br.edu.ifsc.saladebatepapo.serverRSA.ClientChaves;
 import br.edu.ifsc.saladebatepapo.serverRSA.ServidorDeChave;
 import java.awt.Color;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,8 +21,12 @@ import java.security.PublicKey;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 /**
  *
@@ -38,9 +44,13 @@ public class BatePapo extends javax.swing.JFrame {
     ClientChaves clientRSA;
     byte[] chaveAES;
     ServidorDeChave file = new ServidorDeChave();
-
-      
     String chaveDescripgrafada;
+
+    //parte do cisual tela
+    private UIManager.LookAndFeelInfo[] looks
+            = UIManager.getInstalledLookAndFeels();
+    private JRadioButton[] escolha = new JRadioButton[looks.length];
+    private ButtonGroup grupoLooks = new ButtonGroup();
 
     public BatePapo() {
         initComponents();
@@ -49,7 +59,18 @@ public class BatePapo extends javax.swing.JFrame {
         conectou = false;
         getRootPane().setDefaultButton(jButtonEnviar);
         file.start();
-        
+        adicionaLookMenu();
+
+    }
+
+    public void adicionaLookMenu() {
+        ItemSelecionado iselect = new ItemSelecionado();
+        for (int i = 0; i < looks.length; i++) {
+            escolha[i] = new JRadioButton(looks[i].getName());
+            escolha[i].addItemListener(iselect);
+            grupoLooks.add(escolha[i]);
+            jMenuVisualizar.add(escolha[i]);
+        }
     }
 
     /**
@@ -71,14 +92,15 @@ public class BatePapo extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButtonEntrar = new javax.swing.JButton();
         jButtonSair = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxSkin = new javax.swing.JComboBox<String>();
         jLabel5 = new javax.swing.JLabel();
         jTextFieldIP = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jTextFieldMensagem = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jListBatePapo = new javax.swing.JList<>();
+        jListBatePapo = new javax.swing.JList<String>();
         jButtonEnviar = new javax.swing.JButton();
+        jMenuVisualizar = new javax.swing.JToolBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,10 +131,10 @@ public class BatePapo extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Padrão", "Dark", "Matrix" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxSkin.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Padrão", "Dark", "Matrix" }));
+        jComboBoxSkin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jComboBoxSkinActionPerformed(evt);
             }
         });
 
@@ -131,26 +153,26 @@ public class BatePapo extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldPorta, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jComboBoxSkin, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldPorta, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jTextFieldIP)
                             .addComponent(jTextFieldGrupo, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE))
@@ -165,7 +187,7 @@ public class BatePapo extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(8, 8, 8)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxSkin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -191,7 +213,6 @@ public class BatePapo extends javax.swing.JFrame {
             }
         });
 
-        jListBatePapo.setEnabled(false);
         jListBatePapo.setFocusable(false);
         jScrollPane1.setViewportView(jListBatePapo);
 
@@ -219,7 +240,7 @@ public class BatePapo extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -227,16 +248,21 @@ public class BatePapo extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jMenuVisualizar.setRollover(true);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jMenuVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addComponent(jMenuVisualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -244,6 +270,7 @@ public class BatePapo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
 
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
 
@@ -273,19 +300,47 @@ public class BatePapo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldIPActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jComboBoxSkinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSkinActionPerformed
         // TODO add your handling code here:
+        if (jComboBoxSkin.getSelectedIndex() == 1) {
+            Color corFundo = Color.BLACK;
+            Color corFonte = Color.WHITE;
+            jPanel1.setBackground(corFundo);
+            jPanel2.setBackground(corFundo);
+            jLabel1.setForeground(corFonte);
+            jLabel2.setForeground(corFonte);
+            jLabel3.setForeground(corFonte);
+            jLabel4.setForeground(corFonte);
+            jLabel5.setForeground(corFonte);
+            jListBatePapo.setBackground(Color.DARK_GRAY);
+            jListBatePapo.setForeground(Color.WHITE);
 
-        Color corFundo = Color.BLACK;
-        Color corFonte = Color.WHITE;
-        jPanel1.setBackground(corFundo);
-        jPanel2.setBackground(corFundo);
-        jLabel1.setForeground(corFonte);
-        jLabel2.setForeground(corFonte);
-        jLabel3.setForeground(corFonte);
-        jLabel4.setForeground(corFonte);
-        jLabel5.setForeground(corFonte);
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+        } else if (jComboBoxSkin.getSelectedIndex() == 2) {
+            Color corFundo = Color.darkGray;
+            Color corFonte = Color.GREEN;
+            jPanel1.setBackground(corFundo);
+            jPanel2.setBackground(corFundo);
+            jLabel1.setForeground(corFonte);
+            jLabel2.setForeground(corFonte);
+            jLabel3.setForeground(corFonte);
+            jLabel4.setForeground(corFonte);
+            jLabel5.setForeground(corFonte);
+            jListBatePapo.setBackground(corFundo);
+            jListBatePapo.setForeground(corFonte);
+        } else if (jComboBoxSkin.getSelectedIndex() == 0) {
+            Color corFundo = null;
+            Color corFonte = Color.BLACK;
+            jPanel1.setBackground(corFundo);
+            jPanel2.setBackground(corFundo);
+            jLabel1.setForeground(corFonte);
+            jLabel2.setForeground(corFonte);
+            jLabel3.setForeground(corFonte);
+            jLabel4.setForeground(corFonte);
+            jLabel5.setForeground(corFonte);
+            jListBatePapo.setBackground(Color.WHITE);
+            jListBatePapo.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_jComboBoxSkinActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
 
@@ -324,12 +379,16 @@ public class BatePapo extends javax.swing.JFrame {
                 System.out.println("depois de receber");
                 chaveDescripgrafada = descriptografaRSA();
                 System.out.println("Chave descriptografada: " + chaveDescripgrafada);
+
             } catch (IOException ex) {
-                Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BatePapo.class
+                        .getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BatePapo.class
+                        .getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
-                Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BatePapo.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
             conectar = new ConectarThread(Integer.parseInt(jTextFieldPorta.getText()),
                     jTextFieldNome.getText(), this, jTextFieldGrupo.getText(), chaveDescripgrafada);
@@ -402,9 +461,12 @@ public class BatePapo extends javax.swing.JFrame {
             System.out.println("criptografado: " + Arrays.toString(criptografado));
             String descriptografado = criptografia.descriptografar(criptografado, chaveDescripgrafada);
             System.out.println("Descriptografado no try:" + descriptografado);
+
         } catch (Exception ex) {
-            Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("pau no criptografar");
+            Logger.getLogger(BatePapo.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.out.println(
+                    "pau no criptografar");
         }
 
         enviarMensagem(criptografado);
@@ -420,8 +482,29 @@ public class BatePapo extends javax.swing.JFrame {
         jTextFieldGrupo.setEnabled(!jTextFieldGrupo.isEnabled());
         jTextFieldNome.setEnabled(!jTextFieldNome.isEnabled());
         jTextFieldPorta.setEnabled(!jTextFieldPorta.isEnabled());
+        jTextFieldIP.setEnabled(!jTextFieldIP.isEnabled());
         jButtonEntrar.setEnabled(!jButtonEntrar.isEnabled());
         jButtonSair.setEnabled(!jButtonSair.isEnabled());
+    }
+
+    private class ItemSelecionado implements ItemListener {
+
+        public void itemStateChanged(ItemEvent e) {
+            for (int i = 0; i < escolha.length; i++) {
+                if (escolha[i].isSelected()) {
+                    atualiza(i);
+                }
+            }
+        }
+    }
+
+    public void atualiza(int i) {
+        try {
+            UIManager.setLookAndFeel(looks[i].getClassName());
+            SwingUtilities.updateComponentTreeUI(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -438,16 +521,21 @@ public class BatePapo extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BatePapo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BatePapo.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BatePapo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BatePapo.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BatePapo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BatePapo.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BatePapo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BatePapo.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -463,13 +551,14 @@ public class BatePapo extends javax.swing.JFrame {
     private javax.swing.JButton jButtonEntrar;
     private javax.swing.JButton jButtonEnviar;
     private javax.swing.JButton jButtonSair;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBoxSkin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JList<String> jListBatePapo;
+    private javax.swing.JToolBar jMenuVisualizar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
