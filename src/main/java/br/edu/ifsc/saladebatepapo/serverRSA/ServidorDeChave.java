@@ -4,8 +4,10 @@ import br.edu.ifsc.saladebatepapo.CriptografiaRSA;
 import java.net.*;
 import java.io.*;
 import java.security.PublicKey;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class ServidorDeChave {
+public class ServidorDeChave extends Thread {
 
     Boolean sair = true;
 
@@ -46,7 +48,7 @@ public class ServidorDeChave {
             enviarCriptografado(servsockCriptografado);
             System.out.println("passou o enviar");
             sock.close();
-            
+
         }
     }
 
@@ -67,10 +69,10 @@ public class ServidorDeChave {
         return CriptografiaRSA.criptografa(senha, chavePublica);
     }
 
-    public void enviarCriptografado(ServerSocket servsock ) throws IOException, FileNotFoundException, ClassNotFoundException {
+    public void enviarCriptografado(ServerSocket servsock) throws IOException, FileNotFoundException, ClassNotFoundException {
         System.out.println("Entrou no enviar criptogtafado");
         // cria o nosso socket
-       
+
         while (sair) {
             System.out.println("Entrou no enviar criptogtafado while");
             Socket sock = servsock.accept();
@@ -93,25 +95,39 @@ public class ServidorDeChave {
 
     /* public void enviaChave() throws IOException {
 
-        // cria o nosso socket
-//        ServerSocket servsock = new ServerSocket(50000);
-//        Socket sock = servsock.accept();
-        // Socket sock = new Socket("10.151.34.51", 50000);
-        Socket sock = new Socket("localhost", 50000);
-        System.out.println("Conexão aceita: " + sock);
-        File arquivo = new File(CriptografiaRSA.PATH_CHAVE_PUBLICA);
-        byte[] mybytearray = new byte[(int) arquivo.length()];
-        FileInputStream fis = new FileInputStream(arquivo);
-        BufferedInputStream bis = new BufferedInputStream(fis);
-        bis.read(mybytearray, 0, mybytearray.length);
-        OutputStream os = sock.getOutputStream();
-        System.out.println("Enviando...");
-        os.write(mybytearray, 0, mybytearray.length);
-        os.flush();
+     // cria o nosso socket
+     //        ServerSocket servsock = new ServerSocket(50000);
+     //        Socket sock = servsock.accept();
+     // Socket sock = new Socket("10.151.34.51", 50000);
+     Socket sock = new Socket("localhost", 50000);
+     System.out.println("Conexão aceita: " + sock);
+     File arquivo = new File(CriptografiaRSA.PATH_CHAVE_PUBLICA);
+     byte[] mybytearray = new byte[(int) arquivo.length()];
+     FileInputStream fis = new FileInputStream(arquivo);
+     BufferedInputStream bis = new BufferedInputStream(fis);
+     bis.read(mybytearray, 0, mybytearray.length);
+     OutputStream os = sock.getOutputStream();
+     System.out.println("Enviando...");
+     os.write(mybytearray, 0, mybytearray.length);
+     os.flush();
 
-        sock.close();
+     sock.close();
 
-    }*/
+     }*/
+    public void run() {
+
+        try {
+            receber();
+        } catch (IOException ex) {
+            System.out.println("Pau ao iniciar serdor de chaves");
+            Logger.getLogger(ServidorDeChave.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Pau ao iniciar serdor de chaves");
+            Logger.getLogger(ServidorDeChave.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         ServidorDeChave file = new ServidorDeChave();
 

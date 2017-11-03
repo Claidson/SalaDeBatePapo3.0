@@ -6,8 +6,8 @@
 package br.edu.ifsc.saladebatepapo;
 
 import static br.edu.ifsc.saladebatepapo.CriptografiaRSA.PATH_CHAVE_PRIVADA;
-import static br.edu.ifsc.saladebatepapo.TESTE.getBytes;
 import br.edu.ifsc.saladebatepapo.serverRSA.ClientChaves;
+import br.edu.ifsc.saladebatepapo.serverRSA.ServidorDeChave;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,7 +37,9 @@ public class BatePapo extends javax.swing.JFrame {
     Boolean conectou;
     ClientChaves clientRSA;
     byte[] chaveAES;
+    ServidorDeChave file = new ServidorDeChave();
 
+      
     String chaveDescripgrafada;
 
     public BatePapo() {
@@ -46,6 +48,8 @@ public class BatePapo extends javax.swing.JFrame {
         clientRSA = new ClientChaves();
         conectou = false;
         getRootPane().setDefaultButton(jButtonEnviar);
+        file.start();
+        
     }
 
     /**
@@ -309,13 +313,13 @@ public class BatePapo extends javax.swing.JFrame {
 
             try {
                 System.out.println("vai ir a chave");
-                clientRSA.enviaChavePublica();
+                clientRSA.enviaChavePublica(jTextFieldIP.getText());
                 System.out.println("Foi a chave");
 
                 Thread.sleep(2000);
 
                 System.out.println("aki antes de receber");
-                clientRSA.receberArquivoCriptografado();
+                clientRSA.receberArquivoCriptografado(jTextFieldIP.getText());
 
                 System.out.println("depois de receber");
                 chaveDescripgrafada = descriptografaRSA();
