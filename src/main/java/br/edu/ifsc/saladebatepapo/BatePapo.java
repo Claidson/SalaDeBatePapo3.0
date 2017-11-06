@@ -291,7 +291,7 @@ public class BatePapo extends javax.swing.JFrame {
 
     private void jTextFieldMensagemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMensagemKeyPressed
         if (evt.getKeyCode() == evt.VK_ENTER) {
-            jButtonEnviar.doClick();
+            //jButtonEnviar.doClick();
 //aqui vai o q voce deseja fazer quando o usuario clicar enter naquele jtextfield
         }
     }//GEN-LAST:event_jTextFieldMensagemKeyPressed
