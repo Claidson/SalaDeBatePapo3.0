@@ -62,6 +62,7 @@ public class BatePapo extends javax.swing.JFrame {
         recebeuChave = false;
         getRootPane().setDefaultButton(jButtonEnviar);
         adicionaLookMenu();
+        desabilitaBotoesServidorChaves();
 
     }
 
@@ -87,27 +88,27 @@ public class BatePapo extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jToggleButton1 = new javax.swing.JToggleButton();
         jPanel1 = new javax.swing.JPanel();
+        jPanelNome = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldNome = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextFieldPorta = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldGrupo = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jButtonEntrar = new javax.swing.JButton();
-        jButtonSair = new javax.swing.JButton();
-        jComboBoxSkin = new javax.swing.JComboBox<String>();
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldPorta = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextFieldIP = new javax.swing.JTextField();
+        jComboBoxSkin = new javax.swing.JComboBox<String>();
+        jLabel4 = new javax.swing.JLabel();
         jRadioButLocal = new javax.swing.JRadioButton();
-        jRadioButRemoto = new javax.swing.JRadioButton();
         jToggleButBuscarChaveLocal = new javax.swing.JToggleButton();
+        jRadioButRemoto = new javax.swing.JRadioButton();
         jToggleButBuscarChaveRemota = new javax.swing.JToggleButton();
-        jPanel2 = new javax.swing.JPanel();
-        jTextFieldMensagem = new javax.swing.JTextField();
+        jTextFieldIP = new javax.swing.JTextField();
+        jPanelServidor = new javax.swing.JPanel();
+        jToggleChat = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListBatePapo = new javax.swing.JList<String>();
         jButtonEnviar = new javax.swing.JButton();
+        jTextFieldMensagem = new javax.swing.JTextField();
         jMenuVisualizar = new javax.swing.JToolBar();
 
         jToggleButton1.setText("jToggleButton1");
@@ -115,6 +116,10 @@ public class BatePapo extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Nome");
+
+        jLabel3.setText("Grupo");
+
+        jTextFieldGrupo.setText("228.5.6.7");
 
         jLabel2.setText("Porta");
 
@@ -125,26 +130,7 @@ public class BatePapo extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Grupo");
-
-        jTextFieldGrupo.setText("228.5.6.7");
-
-        jLabel4.setText("Servidor chaves");
-
-        jButtonEntrar.setText("Entrar");
-        jButtonEntrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEntrarActionPerformed(evt);
-            }
-        });
-
-        jButtonSair.setText("Sair");
-        jButtonSair.setEnabled(false);
-        jButtonSair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSairActionPerformed(evt);
-            }
-        });
+        jLabel5.setText("Skin");
 
         jComboBoxSkin.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Padrão", "Dark", "Matrix" }));
         jComboBoxSkin.addActionListener(new java.awt.event.ActionListener() {
@@ -153,14 +139,7 @@ public class BatePapo extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Skin");
-
-        jTextFieldIP.setText("localhost");
-        jTextFieldIP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldIPActionPerformed(evt);
-            }
-        });
+        jLabel4.setText("Servidor chaves");
 
         jRadioButLocal.setText("Local");
         jRadioButLocal.addActionListener(new java.awt.event.ActionListener() {
@@ -169,8 +148,6 @@ public class BatePapo extends javax.swing.JFrame {
             }
         });
 
-        jRadioButRemoto.setText("Remoto");
-
         jToggleButBuscarChaveLocal.setText("Iniciar ");
         jToggleButBuscarChaveLocal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,101 +155,112 @@ public class BatePapo extends javax.swing.JFrame {
             }
         });
 
-        jToggleButBuscarChaveRemota.setText("Iniciar ");
+        jRadioButRemoto.setText("Remoto");
+        jRadioButRemoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButRemotoActionPerformed(evt);
+            }
+        });
+
+        jToggleButBuscarChaveRemota.setText("Buscar");
         jToggleButBuscarChaveRemota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButBuscarChaveRemotaActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(39, 39, 39)
-                        .addComponent(jTextFieldNome))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButRemoto)
-                            .addComponent(jRadioButLocal))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldIP, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToggleButBuscarChaveLocal))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextFieldGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jToggleButBuscarChaveRemota)))))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel5))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabel2)))
-                .addGap(2, 2, 2)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBoxSkin, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextFieldPorta, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButtonSair, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
-                            .addComponent(jButtonEntrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(60, 60, 60))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxSkin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel4)
-                                .addComponent(jRadioButLocal))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addComponent(jToggleButBuscarChaveLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButRemoto)
-                            .addComponent(jTextFieldIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToggleButBuscarChaveRemota, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(jTextFieldPorta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonEntrar)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonSair, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
-        );
-
-        jTextFieldMensagem.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextFieldMensagemKeyPressed(evt);
+        jTextFieldIP.setText("localhost");
+        jTextFieldIP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldIPActionPerformed(evt);
             }
         });
+
+        javax.swing.GroupLayout jPanelNomeLayout = new javax.swing.GroupLayout(jPanelNome);
+        jPanelNome.setLayout(jPanelNomeLayout);
+        jPanelNomeLayout.setHorizontalGroup(
+            jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelNomeLayout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelNomeLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxSkin, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelNomeLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldPorta, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelNomeLayout.createSequentialGroup()
+                                .addComponent(jRadioButRemoto)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldIP, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jToggleButBuscarChaveRemota))
+                            .addGroup(jPanelNomeLayout.createSequentialGroup()
+                                .addComponent(jRadioButLocal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jToggleButBuscarChaveLocal)))))
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+        jPanelNomeLayout.setVerticalGroup(
+            jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelNomeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(jComboBoxSkin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jTextFieldPorta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jRadioButLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToggleButBuscarChaveLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButRemoto)
+                    .addComponent(jToggleButBuscarChaveRemota, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jToggleChat.setText("Entrar");
+        jToggleChat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleChatActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelServidorLayout = new javax.swing.GroupLayout(jPanelServidor);
+        jPanelServidor.setLayout(jPanelServidorLayout);
+        jPanelServidorLayout.setHorizontalGroup(
+            jPanelServidorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelServidorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jToggleChat, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelServidorLayout.setVerticalGroup(
+            jPanelServidorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToggleChat)
+        );
 
         jListBatePapo.setFocusable(false);
         jScrollPane1.setViewportView(jListBatePapo);
@@ -284,29 +272,44 @@ public class BatePapo extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+        jTextFieldMensagem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldMensagemKeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jTextFieldMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonEnviar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jButtonEnviar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanelServidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanelNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanelNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jPanelServidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEnviar))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jMenuVisualizar.setRollover(true);
@@ -315,50 +318,26 @@ public class BatePapo extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(3, 3, 3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jMenuVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 12, Short.MAX_VALUE))
+                    .addComponent(jMenuVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jMenuVisualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
-    private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
-
-        if (jTextFieldGrupo.getText().equals("")
-                || jTextFieldNome.getText().equals("") || jTextFieldPorta.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
-        } else if (conectou) {
-            System.out.println("conectou enviar: " + conectou);
-            String nome = jTextFieldNome.getText();
-            String texto = jTextFieldMensagem.getText();
-            jTextFieldMensagem.setText("");
-            jTextFieldMensagem.requestFocus();
-            prepararMensagem(nome, texto);
-        } else {
-            JOptionPane.showMessageDialog(null, "Entre na sala primeiro!");
-        }
-    }//GEN-LAST:event_jButtonEnviarActionPerformed
-
-    private void jTextFieldMensagemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMensagemKeyPressed
-        if (evt.getKeyCode() == evt.VK_ENTER) {
-            //jButtonEnviar.doClick();
-//aqui vai o q voce deseja fazer quando o usuario clicar enter naquele jtextfield
-        }
-    }//GEN-LAST:event_jTextFieldMensagemKeyPressed
 
     private void jTextFieldIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIPActionPerformed
         // TODO add your handling code here:
@@ -370,12 +349,14 @@ public class BatePapo extends javax.swing.JFrame {
             Color corFundo = Color.BLACK;
             Color corFonte = Color.WHITE;
             jPanel1.setBackground(corFundo);
-            jPanel2.setBackground(corFundo);
+            jPanelNome.setBackground(corFundo);
             jLabel1.setForeground(corFonte);
             jLabel2.setForeground(corFonte);
             jLabel3.setForeground(corFonte);
             jLabel4.setForeground(corFonte);
             jLabel5.setForeground(corFonte);
+            jRadioButLocal.setForeground(corFonte);
+            jRadioButRemoto.setForeground(corFonte);
             jListBatePapo.setBackground(Color.DARK_GRAY);
             jListBatePapo.setForeground(Color.WHITE);
 
@@ -383,43 +364,32 @@ public class BatePapo extends javax.swing.JFrame {
             Color corFundo = Color.darkGray;
             Color corFonte = Color.GREEN;
             jPanel1.setBackground(corFundo);
-            jPanel2.setBackground(corFundo);
+            jPanelNome.setBackground(corFundo);
             jLabel1.setForeground(corFonte);
             jLabel2.setForeground(corFonte);
             jLabel3.setForeground(corFonte);
             jLabel4.setForeground(corFonte);
             jLabel5.setForeground(corFonte);
+            jRadioButLocal.setForeground(corFonte);
+            jRadioButRemoto.setForeground(corFonte);
             jListBatePapo.setBackground(corFundo);
             jListBatePapo.setForeground(corFonte);
         } else if (jComboBoxSkin.getSelectedIndex() == 0) {
             Color corFundo = null;
             Color corFonte = Color.BLACK;
             jPanel1.setBackground(corFundo);
-            jPanel2.setBackground(corFundo);
+            jPanelNome.setBackground(corFundo);
             jLabel1.setForeground(corFonte);
             jLabel2.setForeground(corFonte);
             jLabel3.setForeground(corFonte);
             jLabel4.setForeground(corFonte);
             jLabel5.setForeground(corFonte);
+            jRadioButLocal.setForeground(corFonte);
+            jRadioButRemoto.setForeground(corFonte);
             jListBatePapo.setBackground(Color.WHITE);
             jListBatePapo.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_jComboBoxSkinActionPerformed
-
-    private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
-
-        if (conectou) {
-            String nome = jTextFieldNome.getText();
-            String texto = "Saiu da sala";
-            prepararMensagem(nome, texto);
-            conectar.parar();
-            conectou = false;
-            habilitaCampos();
-        } else {
-            JOptionPane.showMessageDialog(null, "Entre na sala primeiro!");
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonSairActionPerformed
     private void receberChave(String ip) throws IOException, ClassNotFoundException {
         servidorChave.start();
         try {
@@ -448,13 +418,15 @@ public class BatePapo extends javax.swing.JFrame {
         }
 
     }
-    private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
-        // TODO add your handling code here:
+
+    private void entrarChat() {
         if (jTextFieldGrupo.getText().equals("")
                 || jTextFieldNome.getText().equals("") || jTextFieldPorta.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
         } else if (Integer.parseInt(jTextFieldPorta.getText()) < 1 || Integer.parseInt(jTextFieldPorta.getText()) > 65535) {
             JOptionPane.showMessageDialog(null, "Porta deve ser entre 1 - 65535");
+        } else if (chaveDescripgrafada == null) {
+            JOptionPane.showMessageDialog(null, "Verifique se o servidor de chaves está rodando");
         } else {
 
             conectar = new ConectarThread(Integer.parseInt(jTextFieldPorta.getText()),
@@ -471,15 +443,16 @@ public class BatePapo extends javax.swing.JFrame {
             prepararMensagem(nome, texto);
             habilitaCampos();
         }
-
-    }//GEN-LAST:event_jButtonEntrarActionPerformed
-
+    }
     private void jTextFieldPortaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPortaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPortaActionPerformed
 
     private void jRadioButLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButLocalActionPerformed
-        // TODO add your handling code here:
+        jRadioButRemoto.setSelected(false);
+        desabilitaBotoesServidorChaves();
+        jToggleButBuscarChaveLocal.setVisible(true);
+
     }//GEN-LAST:event_jRadioButLocalActionPerformed
 
     private void jToggleButBuscarChaveLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButBuscarChaveLocalActionPerformed
@@ -491,8 +464,8 @@ public class BatePapo extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        jToggleButBuscarChaveRemota.setBackground(Color.GREEN);
-        jToggleButBuscarChaveRemota.setText("Conectou");
+        jToggleButBuscarChaveLocal.setBackground(Color.YELLOW);
+        jToggleButBuscarChaveLocal.setText("Recebeu");
     }//GEN-LAST:event_jToggleButBuscarChaveLocalActionPerformed
 
     private void jToggleButBuscarChaveRemotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButBuscarChaveRemotaActionPerformed
@@ -504,13 +477,75 @@ public class BatePapo extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        jToggleButBuscarChaveLocal.setBackground(Color.GREEN);
-        jToggleButBuscarChaveLocal.setText("Conectou");
+        jToggleButBuscarChaveRemota.setBackground(Color.YELLOW);
+        jToggleButBuscarChaveRemota.setText("Recebeu");
     }//GEN-LAST:event_jToggleButBuscarChaveRemotaActionPerformed
+
+    private void jRadioButRemotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButRemotoActionPerformed
+        jRadioButLocal.setSelected(false);
+        desabilitaBotoesServidorChaves();
+        jToggleButBuscarChaveRemota.setVisible(true);
+        jTextFieldIP.setVisible(true);
+    }//GEN-LAST:event_jRadioButRemotoActionPerformed
+
+    private void jToggleChatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleChatActionPerformed
+        if (jToggleChat.isSelected()) {
+
+            entrarChat();
+            if (conectou) {
+                jToggleChat.setText("Sair");
+            } else {
+                jToggleChat.setText("Entrar");
+                jToggleChat.setSelected(false);
+            }
+
+        } else {
+            //  JOptionPane.showMessageDialog(null, "Entre na sala primeiro!");
+            String nome = jTextFieldNome.getText();
+            String texto = "Saiu da sala";
+            prepararMensagem(nome, texto);
+            conectar.parar();
+            conectou = false;
+            habilitaCampos();
+            jToggleChat.setText("Entrar");
+        }
+
+
+    }//GEN-LAST:event_jToggleChatActionPerformed
+
+    private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
+
+        if (jTextFieldGrupo.getText().equals("")
+                || jTextFieldNome.getText().equals("") || jTextFieldPorta.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+        } else if (conectou) {
+            System.out.println("conectou enviar: " + conectou);
+            String nome = jTextFieldNome.getText();
+            String texto = jTextFieldMensagem.getText();
+            jTextFieldMensagem.setText("");
+            jTextFieldMensagem.requestFocus();
+            prepararMensagem(nome, texto);
+        } else {
+            JOptionPane.showMessageDialog(null, "Entre na sala primeiro!");
+        }
+    }//GEN-LAST:event_jButtonEnviarActionPerformed
+
+    private void jTextFieldMensagemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMensagemKeyPressed
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            //jButtonEnviar.doClick();
+            //aqui vai o q voce deseja fazer quando o usuario clicar enter naquele jtextfield
+        }
+    }//GEN-LAST:event_jTextFieldMensagemKeyPressed
 
     public void inserirTexto(String texto) {
         listModel.addElement(texto);
 
+    }
+
+    public void desabilitaBotoesServidorChaves() {
+        jTextFieldIP.setVisible(false);
+        jToggleButBuscarChaveLocal.setVisible(false);
+        jToggleButBuscarChaveRemota.setVisible(false);
     }
 
     public void criptografaRSA(String msgOriginal, String ArquivoChavePublica) throws FileNotFoundException, IOException, ClassNotFoundException {
@@ -584,8 +619,7 @@ public class BatePapo extends javax.swing.JFrame {
         jTextFieldNome.setEnabled(!jTextFieldNome.isEnabled());
         jTextFieldPorta.setEnabled(!jTextFieldPorta.isEnabled());
         jTextFieldIP.setEnabled(!jTextFieldIP.isEnabled());
-        jButtonEntrar.setEnabled(!jButtonEntrar.isEnabled());
-        jButtonSair.setEnabled(!jButtonSair.isEnabled());
+
     }
 
     private class ItemSelecionado implements ItemListener {
@@ -650,9 +684,7 @@ public class BatePapo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButtonEntrar;
     private javax.swing.JButton jButtonEnviar;
-    private javax.swing.JButton jButtonSair;
     private javax.swing.JComboBox<String> jComboBoxSkin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -662,7 +694,8 @@ public class BatePapo extends javax.swing.JFrame {
     private javax.swing.JList<String> jListBatePapo;
     private javax.swing.JToolBar jMenuVisualizar;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanelNome;
+    private javax.swing.JPanel jPanelServidor;
     private javax.swing.JRadioButton jRadioButLocal;
     private javax.swing.JRadioButton jRadioButRemoto;
     private javax.swing.JScrollPane jScrollPane1;
@@ -674,5 +707,6 @@ public class BatePapo extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButBuscarChaveLocal;
     private javax.swing.JToggleButton jToggleButBuscarChaveRemota;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton jToggleChat;
     // End of variables declaration//GEN-END:variables
 }
