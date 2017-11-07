@@ -78,12 +78,20 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jTextFieldIP" min="-2" pref="123" max="-2" attributes="0"/>
-                              <Component id="jToggleButton2" max="32767" attributes="0"/>
+                              <Component id="jToggleButBuscarChaveLocal" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jTextFieldGrupo" min="-2" pref="96" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldGrupo" min="-2" pref="96" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jToggleButBuscarChaveRemota" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -102,9 +110,9 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jTextFieldPorta" min="-2" pref="68" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jButtonSair" min="-2" pref="76" max="-2" attributes="0"/>
-                              <Component id="jButtonEntrar" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jButtonSair" pref="76" max="32767" attributes="0"/>
+                              <Component id="jButtonEntrar" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -122,7 +130,6 @@
                       <Component id="jTextFieldNome" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -132,13 +139,14 @@
                               </Group>
                               <Group type="102" attributes="0">
                                   <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
-                                  <Component id="jToggleButton2" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="jToggleButBuscarChaveLocal" min="-2" pref="20" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jRadioButRemoto" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jTextFieldIP" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jToggleButBuscarChaveRemota" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -254,10 +262,21 @@
             <Property name="text" type="java.lang.String" value="Remoto"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JToggleButton" name="jToggleButton2">
+        <Component class="javax.swing.JToggleButton" name="jToggleButBuscarChaveLocal">
           <Properties>
             <Property name="text" type="java.lang.String" value="Iniciar "/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButBuscarChaveLocalActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="jToggleButBuscarChaveRemota">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Iniciar "/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButBuscarChaveRemotaActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -283,7 +302,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <Component id="jScrollPane1" pref="554" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="572" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jTextFieldMensagem" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>

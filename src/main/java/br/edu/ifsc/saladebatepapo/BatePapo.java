@@ -41,9 +41,11 @@ public class BatePapo extends javax.swing.JFrame {
     DefaultListModel listModel;
     CriptografiaAES criptografia;
     Boolean conectou;
+    Boolean recebeuChave;
+    String IpServidorChave;
     ClientChaves clientRSA;
     byte[] chaveAES;
-    ServidorDeChave file = new ServidorDeChave();
+    ServidorDeChave servidorChave = new ServidorDeChave();
     String chaveDescripgrafada;
 
     //parte do cisual tela
@@ -57,8 +59,8 @@ public class BatePapo extends javax.swing.JFrame {
         criptografia = new CriptografiaAES();
         clientRSA = new ClientChaves();
         conectou = false;
+        recebeuChave = false;
         getRootPane().setDefaultButton(jButtonEnviar);
-        file.start();
         adicionaLookMenu();
 
     }
@@ -99,7 +101,8 @@ public class BatePapo extends javax.swing.JFrame {
         jTextFieldIP = new javax.swing.JTextField();
         jRadioButLocal = new javax.swing.JRadioButton();
         jRadioButRemoto = new javax.swing.JRadioButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
+        jToggleButBuscarChaveLocal = new javax.swing.JToggleButton();
+        jToggleButBuscarChaveRemota = new javax.swing.JToggleButton();
         jPanel2 = new javax.swing.JPanel();
         jTextFieldMensagem = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -168,7 +171,19 @@ public class BatePapo extends javax.swing.JFrame {
 
         jRadioButRemoto.setText("Remoto");
 
-        jToggleButton2.setText("Iniciar ");
+        jToggleButBuscarChaveLocal.setText("Iniciar ");
+        jToggleButBuscarChaveLocal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButBuscarChaveLocalActionPerformed(evt);
+            }
+        });
+
+        jToggleButBuscarChaveRemota.setText("Iniciar ");
+        jToggleButBuscarChaveRemota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButBuscarChaveRemotaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -190,11 +205,16 @@ public class BatePapo extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldIP, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jToggleButBuscarChaveLocal))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jToggleButBuscarChaveRemota)))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
@@ -208,9 +228,9 @@ public class BatePapo extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jTextFieldPorta, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonSair, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonEntrar))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonSair, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                            .addComponent(jButtonEntrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(60, 60, 60))
         );
         jPanel1Layout.setVerticalGroup(
@@ -222,7 +242,6 @@ public class BatePapo extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -231,11 +250,12 @@ public class BatePapo extends javax.swing.JFrame {
                                 .addComponent(jRadioButLocal))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(4, 4, 4)
-                                .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jToggleButBuscarChaveLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jRadioButRemoto)
-                            .addComponent(jTextFieldIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jToggleButBuscarChaveRemota, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -281,7 +301,7 @@ public class BatePapo extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -400,7 +420,34 @@ public class BatePapo extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonSairActionPerformed
+    private void receberChave(String ip) throws IOException, ClassNotFoundException {
+        servidorChave.start();
+        try {
+            System.out.println("vai ir a chave");
+            clientRSA.enviaChavePublica(ip);
+            System.out.println("Foi a chave");
 
+            Thread.sleep(2000);
+
+            System.out.println("aki antes de receber");
+            clientRSA.receberArquivoCriptografado(ip);
+
+            System.out.println("depois de receber");
+            chaveDescripgrafada = descriptografaRSA();
+            System.out.println("Chave descriptografada: " + chaveDescripgrafada);
+
+        } catch (IOException ex) {
+            Logger.getLogger(BatePapo.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(BatePapo.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(BatePapo.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
     private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
         // TODO add your handling code here:
         if (jTextFieldGrupo.getText().equals("")
@@ -410,30 +457,6 @@ public class BatePapo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Porta deve ser entre 1 - 65535");
         } else {
 
-            try {
-                System.out.println("vai ir a chave");
-                clientRSA.enviaChavePublica(jTextFieldIP.getText());
-                System.out.println("Foi a chave");
-
-                Thread.sleep(2000);
-
-                System.out.println("aki antes de receber");
-                clientRSA.receberArquivoCriptografado(jTextFieldIP.getText());
-
-                System.out.println("depois de receber");
-                chaveDescripgrafada = descriptografaRSA();
-                System.out.println("Chave descriptografada: " + chaveDescripgrafada);
-
-            } catch (IOException ex) {
-                Logger.getLogger(BatePapo.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(BatePapo.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(BatePapo.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            }
             conectar = new ConectarThread(Integer.parseInt(jTextFieldPorta.getText()),
                     jTextFieldNome.getText(), this, jTextFieldGrupo.getText(), chaveDescripgrafada);
             System.out.println("Conectado");
@@ -458,6 +481,32 @@ public class BatePapo extends javax.swing.JFrame {
     private void jRadioButLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButLocalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButLocalActionPerformed
+
+    private void jToggleButBuscarChaveLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButBuscarChaveLocalActionPerformed
+        IpServidorChave = "localhost";
+        try {
+            receberChave(IpServidorChave);
+        } catch (IOException ex) {
+            Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        jToggleButBuscarChaveRemota.setBackground(Color.GREEN);
+        jToggleButBuscarChaveRemota.setText("Conectou");
+    }//GEN-LAST:event_jToggleButBuscarChaveLocalActionPerformed
+
+    private void jToggleButBuscarChaveRemotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButBuscarChaveRemotaActionPerformed
+        IpServidorChave = jTextFieldIP.getText();
+        try {
+            receberChave(IpServidorChave);
+        } catch (IOException ex) {
+            Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        jToggleButBuscarChaveLocal.setBackground(Color.GREEN);
+        jToggleButBuscarChaveLocal.setText("Conectou");
+    }//GEN-LAST:event_jToggleButBuscarChaveRemotaActionPerformed
 
     public void inserirTexto(String texto) {
         listModel.addElement(texto);
@@ -622,7 +671,8 @@ public class BatePapo extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldMensagem;
     private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JTextField jTextFieldPorta;
+    private javax.swing.JToggleButton jToggleButBuscarChaveLocal;
+    private javax.swing.JToggleButton jToggleButBuscarChaveRemota;
     private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
     // End of variables declaration//GEN-END:variables
 }
