@@ -16,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.net.ConnectException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Arrays;
@@ -391,8 +392,12 @@ public class BatePapo extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jComboBoxSkinActionPerformed
     private void receberChave(String ip) throws IOException, ClassNotFoundException {
-        servidorChave.start();
+        if (ip.equals("localhost")) {
+            servidorChave.start();
+            System.out.println("chave local");
+        }
         try {
+
             System.out.println("vai ir a chave");
             clientRSA.enviaChavePublica(ip);
             System.out.println("Foi a chave");
@@ -406,15 +411,10 @@ public class BatePapo extends javax.swing.JFrame {
             chaveDescripgrafada = descriptografaRSA();
             System.out.println("Chave descriptografada: " + chaveDescripgrafada);
 
-        } catch (IOException ex) {
+        } catch (ClassNotFoundException | InterruptedException |ConnectException ex) {
             Logger.getLogger(BatePapo.class
                     .getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(BatePapo.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(BatePapo.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Pau no metodo de receber chaves"+ ex);
         }
 
     }
@@ -456,16 +456,31 @@ public class BatePapo extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButLocalActionPerformed
 
     private void jToggleButBuscarChaveLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButBuscarChaveLocalActionPerformed
-        IpServidorChave = "localhost";
-        try {
-            receberChave(IpServidorChave);
-        } catch (IOException ex) {
-            Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+      
+       if (jToggleButBuscarChaveLocal.isSelected()) {
+             IpServidorChave = "localhost";
+            try {
+                receberChave(IpServidorChave);
+            } catch (IOException | ClassNotFoundException ex) {
+                System.out.println("pau ao receber chave local");
+                Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            if (chaveDescripgrafada != null) {
+                jToggleButBuscarChaveLocal.setText("Recebeu");
+                jToggleButBuscarChaveLocal.setBackground(Color.YELLOW);
+
+            } else {
+                jToggleButBuscarChaveLocal.setText("Buscar");
+                jToggleButBuscarChaveLocal.setSelected(false);
+                JOptionPane.showMessageDialog(null, "Verifique servidor de chaves local");
+            }
+
+        } else {
+
+            jToggleButBuscarChaveLocal.setText("Buscar");
         }
-        jToggleButBuscarChaveLocal.setBackground(Color.YELLOW);
-        jToggleButBuscarChaveLocal.setText("Recebeu");
+
     }//GEN-LAST:event_jToggleButBuscarChaveLocalActionPerformed
 
     private void jToggleButBuscarChaveRemotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButBuscarChaveRemotaActionPerformed
@@ -473,9 +488,8 @@ public class BatePapo extends javax.swing.JFrame {
             IpServidorChave = jTextFieldIP.getText();
             try {
                 receberChave(IpServidorChave);
-            } catch (IOException ex) {
-                Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
+            } catch (IOException | ClassNotFoundException ex) {
+                System.out.println("pau ao receber chave remota");
                 Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
             }
 
@@ -486,12 +500,12 @@ public class BatePapo extends javax.swing.JFrame {
             } else {
                 jToggleButBuscarChaveRemota.setText("Buscar");
                 jToggleButBuscarChaveRemota.setSelected(false);
-                System.out.println("else");
+                JOptionPane.showMessageDialog(null, "Verifique servidor de chaves");
             }
 
         } else {
 
-            jToggleChat.setText("Buscar");
+            jToggleButBuscarChaveRemota.setText("Buscar");
         }
 
 
