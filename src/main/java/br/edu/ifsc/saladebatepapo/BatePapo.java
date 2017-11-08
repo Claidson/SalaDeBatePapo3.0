@@ -96,7 +96,7 @@ public class BatePapo extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jTextFieldPorta = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jComboBoxSkin = new javax.swing.JComboBox<String>();
+        jComboBoxSkin = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jRadioButLocal = new javax.swing.JRadioButton();
         jToggleButBuscarChaveLocal = new javax.swing.JToggleButton();
@@ -106,7 +106,7 @@ public class BatePapo extends javax.swing.JFrame {
         jPanelServidor = new javax.swing.JPanel();
         jToggleChat = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jListBatePapo = new javax.swing.JList<String>();
+        jListBatePapo = new javax.swing.JList<>();
         jButtonEnviar = new javax.swing.JButton();
         jTextFieldMensagem = new javax.swing.JTextField();
         jMenuVisualizar = new javax.swing.JToolBar();
@@ -132,7 +132,7 @@ public class BatePapo extends javax.swing.JFrame {
 
         jLabel5.setText("Skin");
 
-        jComboBoxSkin.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Padrão", "Dark", "Matrix" }));
+        jComboBoxSkin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Padrão", "Dark", "Matrix" }));
         jComboBoxSkin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxSkinActionPerformed(evt);
@@ -169,7 +169,7 @@ public class BatePapo extends javax.swing.JFrame {
             }
         });
 
-        jTextFieldIP.setText("localhost");
+        jTextFieldIP.setText("10.151.34.51");
         jTextFieldIP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldIPActionPerformed(evt);
@@ -469,16 +469,32 @@ public class BatePapo extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButBuscarChaveLocalActionPerformed
 
     private void jToggleButBuscarChaveRemotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButBuscarChaveRemotaActionPerformed
-        IpServidorChave = jTextFieldIP.getText();
-        try {
-            receberChave(IpServidorChave);
-        } catch (IOException ex) {
-            Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+        if (jToggleButBuscarChaveRemota.isSelected()) {
+            IpServidorChave = jTextFieldIP.getText();
+            try {
+                receberChave(IpServidorChave);
+            } catch (IOException ex) {
+                Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            if (chaveDescripgrafada != null) {
+                jToggleButBuscarChaveRemota.setText("Recebeu");
+                jToggleButBuscarChaveRemota.setBackground(Color.YELLOW);
+
+            } else {
+                jToggleButBuscarChaveRemota.setText("Buscar");
+                jToggleButBuscarChaveRemota.setSelected(false);
+                System.out.println("else");
+            }
+
+        } else {
+
+            jToggleChat.setText("Buscar");
         }
-        jToggleButBuscarChaveRemota.setBackground(Color.YELLOW);
-        jToggleButBuscarChaveRemota.setText("Recebeu");
+
+
     }//GEN-LAST:event_jToggleButBuscarChaveRemotaActionPerformed
 
     private void jRadioButRemotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButRemotoActionPerformed
