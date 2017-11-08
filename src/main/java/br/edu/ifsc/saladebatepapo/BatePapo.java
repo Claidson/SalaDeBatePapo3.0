@@ -393,8 +393,14 @@ public class BatePapo extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxSkinActionPerformed
     private void receberChave(String ip) throws IOException, ClassNotFoundException {
         if (ip.equals("localhost")) {
-            servidorChave.start();
-            System.out.println("chave local");
+            try {
+
+                servidorChave.start();
+                System.out.println("chave local");
+            } catch (IllegalThreadStateException e) {
+                System.out.println("Pau na thread local de receber chaves " + e);
+            }
+
         }
         try {
 
@@ -411,10 +417,10 @@ public class BatePapo extends javax.swing.JFrame {
             chaveDescripgrafada = descriptografaRSA();
             System.out.println("Chave descriptografada: " + chaveDescripgrafada);
 
-        } catch (ClassNotFoundException | InterruptedException |ConnectException ex) {
+        } catch (ClassNotFoundException | InterruptedException | ConnectException ex) {
             Logger.getLogger(BatePapo.class
                     .getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Pau no metodo de receber chaves"+ ex);
+            System.out.println("Pau no metodo de receber chaves" + ex);
         }
 
     }
@@ -456,9 +462,9 @@ public class BatePapo extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButLocalActionPerformed
 
     private void jToggleButBuscarChaveLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButBuscarChaveLocalActionPerformed
-      
-       if (jToggleButBuscarChaveLocal.isSelected()) {
-             IpServidorChave = "localhost";
+
+        if (jToggleButBuscarChaveLocal.isSelected()) {
+            IpServidorChave = "localhost";
             try {
                 receberChave(IpServidorChave);
             } catch (IOException | ClassNotFoundException ex) {
