@@ -22,7 +22,7 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout chaveA.key -out have
 public class TestarHttpsExemplo {
 
     public static void main(String[] args) {
-        new TestarHttpsExemplo().testIt("https://www.caelum.com.br");
+        new TestarHttpsExemplo().testIt("http://10.151.34.51");
     }
 
     public void carregarCertificado() {
@@ -49,6 +49,7 @@ public class TestarHttpsExemplo {
         try {
             URL url = new URL(https_url);
             HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+            
 
             if (con.getResponseCode() == HttpsURLConnection.HTTP_OK) {
                 String line;
