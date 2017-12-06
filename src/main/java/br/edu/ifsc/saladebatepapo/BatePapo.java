@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.SwingUtilities;
@@ -48,6 +49,7 @@ public class BatePapo extends javax.swing.JFrame {
     byte[] chaveAES;
     ServidorDeChave servidorChave = new ServidorDeChave();
     String chaveDescripgrafada;
+    String caminhoCertificado;
 
     //parte do cisual tela
     private UIManager.LookAndFeelInfo[] looks
@@ -104,6 +106,7 @@ public class BatePapo extends javax.swing.JFrame {
         jRadioButRemoto = new javax.swing.JRadioButton();
         jToggleButBuscarChaveRemota = new javax.swing.JToggleButton();
         jTextFieldIP = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         jPanelServidor = new javax.swing.JPanel();
         jToggleChat = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -177,6 +180,13 @@ public class BatePapo extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Carregar Certificado");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelNomeLayout = new javax.swing.GroupLayout(jPanelNome);
         jPanelNome.setLayout(jPanelNomeLayout);
         jPanelNomeLayout.setHorizontalGroup(
@@ -193,15 +203,20 @@ public class BatePapo extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxSkin, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelNomeLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldPorta, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4)
+                        .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelNomeLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldPorta, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel4))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelNomeLayout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(9, 9, 9)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelNomeLayout.createSequentialGroup()
@@ -235,11 +250,14 @@ public class BatePapo extends javax.swing.JFrame {
                     .addComponent(jRadioButLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jToggleButBuscarChaveLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
-                .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButRemoto)
-                    .addComponent(jToggleButBuscarChaveRemota, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelNomeLayout.createSequentialGroup()
+                        .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButRemoto)
+                            .addComponent(jToggleButBuscarChaveRemota, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
 
         jToggleChat.setText("Entrar");
@@ -324,7 +342,7 @@ public class BatePapo extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 12, Short.MAX_VALUE))
+                        .addGap(0, 20, Short.MAX_VALUE))
                     .addComponent(jMenuVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -573,6 +591,19 @@ public class BatePapo extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextFieldMensagemKeyPressed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser file = new JFileChooser(); 
+          file.setFileSelectionMode(JFileChooser.FILES_ONLY);
+          int i= file.showSaveDialog(null);
+        if (i==1){
+            caminhoCertificado = "";
+        } else {
+            File arquivo = file.getSelectedFile();
+           caminhoCertificado = arquivo.getAbsolutePath();
+            System.out.println("Caminho certificado: "+caminhoCertificado);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public void inserirTexto(String texto) {
         listModel.addElement(texto);
 
@@ -720,6 +751,7 @@ public class BatePapo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonEnviar;
     private javax.swing.JComboBox<String> jComboBoxSkin;
     private javax.swing.JLabel jLabel1;

@@ -2,6 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+ * keytool -genkey -alias signFiles -keystore CertificadoChat
  */
 package br.edu.ifsc.saladebatepapo.serverSSL;
 
@@ -28,13 +29,15 @@ public class ServidorSSL extends Thread {
     Boolean sair = true;
 
     public void receber() throws IOException, FileNotFoundException, ClassNotFoundException {
+        System.setProperty("javax.net.ssl.keyStore", "ssl/CertificadoChat.cer");
+        System.setProperty("javax.net.ssl.keyStorePassword", "chatifsc");
 
         SSLServerSocket server;
         SSLServerSocketFactory factory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
         server = (SSLServerSocket) factory.createServerSocket(50002);
 
         SSLServerSocket serverRetorno;
-        
+
         serverRetorno = (SSLServerSocket) factory.createServerSocket(50003);
 
         while (true) {
@@ -88,10 +91,9 @@ public class ServidorSSL extends Thread {
 
             // Socket sock = new Socket("10.151.34.51", 50000);
             // Socket sock = new Socket("localhost", 50001);
-      
             SSLSocket servsock = (SSLSocket) serverRetorno.accept();
             System.out.println("Conexão aceita: " + servsock);
-            String retorno = "Conexão: " + servsock.toString()+"\n";
+            String retorno = "Conexão: " + servsock.toString() + "\n";
             byte[] mybytearray = retorno.getBytes();
             System.out.println("array de bytes: " + mybytearray.toString());
 
@@ -152,8 +154,7 @@ public class ServidorSSL extends Thread {
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        System.setProperty("javax.net.ssl.keyStore", "ssl/CertificadoChat");
-        System.setProperty("javax.net.ssl.keyStorePassword", "chatifsc");
+
         ServidorSSL file = new ServidorSSL();
 
         file.receber();

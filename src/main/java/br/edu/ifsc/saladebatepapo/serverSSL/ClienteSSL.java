@@ -20,6 +20,8 @@ public class ClienteSSL {
     public String chaveCriptogtafada;
 
     public void enviaCertificadoPublico(String ipServidor) throws IOException {
+        System.setProperty("javax.net.ssl.trustStore", "ssl/CertificadoChatTeste.cer");
+        System.setProperty("javax.net.ssl.trustStorePassword", "chatifsc");
 
         //Socket sock = new Socket(ipServidor, 50002);
         SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
@@ -102,8 +104,7 @@ public class ClienteSSL {
     }
 
     public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
-        System.setProperty("javax.net.ssl.trustStore", "ssl/CertificadoChat");
-        System.setProperty("javax.net.ssl.trustStorePassword", "chatifsc");
+        
         ClienteSSL file = new ClienteSSL();
         //String ip = "10.151.34.51";
         String ip = "localhost";
