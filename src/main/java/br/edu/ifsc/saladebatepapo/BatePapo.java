@@ -69,6 +69,7 @@ public class BatePapo extends javax.swing.JFrame {
         getRootPane().setDefaultButton(jButtonEnviar);
         adicionaLookMenu();
         desabilitaBotoesServidorChaves();
+        habilitaBuscaChave(false);
 
     }
 
@@ -103,7 +104,7 @@ public class BatePapo extends javax.swing.JFrame {
         jTextFieldPorta = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jComboBoxSkin = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
+        jLabelChaves = new javax.swing.JLabel();
         jRadioButLocal = new javax.swing.JRadioButton();
         jToggleButBuscarChaveLocal = new javax.swing.JToggleButton();
         jRadioButRemoto = new javax.swing.JRadioButton();
@@ -148,7 +149,7 @@ public class BatePapo extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Servidor chaves");
+        jLabelChaves.setText("Servidor chaves");
 
         jRadioButLocal.setText("Local");
         jRadioButLocal.addActionListener(new java.awt.event.ActionListener() {
@@ -228,7 +229,7 @@ public class BatePapo extends javax.swing.JFrame {
                             .addGroup(jPanelNomeLayout.createSequentialGroup()
                                 .addComponent(jTextFieldPorta, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel4))
+                                .addComponent(jLabelChaves))
                             .addComponent(jButtonCarregarCertificado, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,7 +260,7 @@ public class BatePapo extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jTextFieldPorta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4)
+                    .addComponent(jLabelChaves)
                     .addComponent(jRadioButLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jToggleButBuscarChaveLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -391,7 +392,7 @@ public class BatePapo extends javax.swing.JFrame {
             jLabel1.setForeground(corFonte);
             jLabel2.setForeground(corFonte);
             jLabel3.setForeground(corFonte);
-            jLabel4.setForeground(corFonte);
+            jLabelChaves.setForeground(corFonte);
             jLabel5.setForeground(corFonte);
             jRadioButLocal.setForeground(corFonte);
             jRadioButRemoto.setForeground(corFonte);
@@ -406,7 +407,7 @@ public class BatePapo extends javax.swing.JFrame {
             jLabel1.setForeground(corFonte);
             jLabel2.setForeground(corFonte);
             jLabel3.setForeground(corFonte);
-            jLabel4.setForeground(corFonte);
+            jLabelChaves.setForeground(corFonte);
             jLabel5.setForeground(corFonte);
             jRadioButLocal.setForeground(corFonte);
             jRadioButRemoto.setForeground(corFonte);
@@ -420,7 +421,7 @@ public class BatePapo extends javax.swing.JFrame {
             jLabel1.setForeground(corFonte);
             jLabel2.setForeground(corFonte);
             jLabel3.setForeground(corFonte);
-            jLabel4.setForeground(corFonte);
+            jLabelChaves.setForeground(corFonte);
             jLabel5.setForeground(corFonte);
             jRadioButLocal.setForeground(corFonte);
             jRadioButRemoto.setForeground(corFonte);
@@ -619,20 +620,37 @@ public class BatePapo extends javax.swing.JFrame {
         } else {
             File arquivo = file.getSelectedFile();
             caminhoCertificado = arquivo.getPath();
-            System.out.println("Caminho certificado: " + caminhoCertificado);
+            System.out.println("Caminho certificado escolhido: " + caminhoCertificado);
+            Boolean autenticou =false;
             try {
-                clienteSSL.enviaCertificadoPublico(jTextFieldServidorSSL.getText(), caminhoCertificado);
-                Thread.sleep(2000);
-                String retorno = clienteSSL.receberRetornoAutenticacao(jTextFieldServidorSSL.getText());
-                JOptionPane.showMessageDialog(null, "Conectado...\n"+retorno);
-            } catch (IOException ex) {
+                System.out.println("Tentando autenticar: "+ autenticou.toString());
+                autenticou = clienteSSL.enviaCertificadoPublico(jTextFieldServidorSSL.getText(), caminhoCertificado);
+                System.out.println("Depois de autenticar: "+ autenticou.toString());
+                if (autenticou) {
+
+                    Thread.sleep(3000);
+                    String retorno = clienteSSL.receberRetornoAutenticacao(jTextFieldServidorSSL.getText());
+                    JOptionPane.showMessageDialog(null, "Conectado...\n" + retorno);
+                    habilitaBuscaChave(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Verifique seu certificado...\t");
+                }
+
+            } catch (Exception ex) {
                 System.out.println("Pau ao selecionar certificado..." + ex);
-                JOptionPane.showMessageDialog(null, "Verifique seu certificado...\t");
-            } catch (InterruptedException ex) {
-                Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Erro...verifique seu certificado...\t");
+
             }
         }
     }//GEN-LAST:event_jButtonCarregarCertificadoActionPerformed
+    public void habilitaBuscaChave(Boolean estado) {
+        jRadioButLocal.setVisible(estado);
+        jRadioButRemoto.setVisible(estado);
+        jToggleButBuscarChaveLocal.setVisible(estado);
+        jToggleButBuscarChaveRemota.setVisible(estado);
+        jTextFieldIP.setVisible(estado);
+        jLabelChaves.setVisible(estado);
+    }
 
     public void inserirTexto(String texto) {
         listModel.addElement(texto);
@@ -787,9 +805,9 @@ public class BatePapo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabelChaves;
     private javax.swing.JList<String> jListBatePapo;
     private javax.swing.JToolBar jMenuVisualizar;
     private javax.swing.JPanel jPanel1;

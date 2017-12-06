@@ -19,30 +19,37 @@ public class ClienteSSL {
 
     public String chaveCriptogtafada;
 
-    public void enviaCertificadoPublico(String ipServidor, String caminho) throws IOException {
-       // System.setProperty("javax.net.ssl.trustStore", "/home/user/NetBeansProjects/SalaDeBatePapo3.0/ssl/CertificadoChatTeste.cer");
+    public Boolean enviaCertificadoPublico(String ipServidor, String caminho) throws IOException {
+//        System.setProperty("javax.net.ssl.trustStore", "/home/user/NetBeansProjects/SalaDeBatePapo3.0/ssl/CertificadoChatTeste.cer");
         System.setProperty("javax.net.ssl.trustStore", caminho);
         System.setProperty("javax.net.ssl.trustStorePassword", "chatifsc");
-        System.out.println("Caminho cliente: "+ caminho);
+        // System.out.println("Caminho cliente: " + caminho);
         //Socket sock = new Socket(ipServidor, 50002);
-        SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-        SSLSocket sock = (SSLSocket) factory.createSocket(ipServidor, 50002);
+        Boolean autenticou = false;
+        SSLSocketFactory fabrica = (SSLSocketFactory) SSLSocketFactory.getDefault();
+        SSLSocket sock = (SSLSocket) fabrica.createSocket(ipServidor, 50002);
+        try {
+            System.out.println("Conexão aceita para enviar: " + sock);
+            File arquivo = new File("ssl/certificado1.crt");
+            byte[] mybytearray = new byte[(int) arquivo.length()];
+            FileInputStream fis = new FileInputStream(arquivo);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            bis.read(mybytearray, 0, mybytearray.length);
+            OutputStream os = sock.getOutputStream();
+            System.out.println("Enviando...");
+            os.write(mybytearray, 0, mybytearray.length);
+            os.flush();
+            //receberArquivo(sock);
+            System.out.println("certificado enviado: ");
+            autenticou = true;
 
-        System.out.println("Conexão aceita para enviar: " + sock);
-        File arquivo = new File("ssl/certificado1.crt");
-        byte[] mybytearray = new byte[(int) arquivo.length()];
-        FileInputStream fis = new FileInputStream(arquivo);
-        BufferedInputStream bis = new BufferedInputStream(fis);
-        bis.read(mybytearray, 0, mybytearray.length);
-        OutputStream os = sock.getOutputStream();
-        System.out.println("Enviando...");
-        os.write(mybytearray, 0, mybytearray.length);
-        os.flush();
-        //receberArquivo(sock);
-
+        } catch (Exception e) {
+            System.out.println("Erro no aperto de mão ao enviar certificado ao servidor" +e);
+        }
         sock.close();
-        System.out.println("certificado enviado: ");
+
         //receberArquivo(sock);
+        return autenticou;
     }
 
     public String receberRetornoAutenticacao(String ipServidor) throws IOException {
@@ -78,7 +85,7 @@ public class ClienteSSL {
         System.out.println("recebido: " + sock.getSession());
         bos.close();
         sock.close();
-     
+
         return retorno;
     }
 
@@ -121,7 +128,7 @@ public class ClienteSSL {
         } catch (Exception e) {
             System.out.println("demoro");
         }
-      //  file.receberRetornoAutenticacao(ip);
+        //  file.receberRetornoAutenticacao(ip);
 //file.teste();
     }
 }

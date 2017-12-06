@@ -9,6 +9,7 @@ package br.edu.ifsc.saladebatepapo.serverSSL;
 import br.edu.ifsc.saladebatepapo.serverRSA.ServidorDeChave;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,8 +19,11 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.KeyStore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLHandshakeException;
 import javax.net.ssl.SSLSocket;
@@ -94,6 +98,16 @@ public class ServidorSSL extends Thread {
     public void ComparaCertificados() throws FileNotFoundException, IOException, ClassNotFoundException {
 
         System.out.println("Comparando certificado recebido...");
+        KeyStore ks = LoadKeyStore(new File(serverKeyStore), pwdKeyStore, "JCEKS");
+        KeyManagerFactory kmf;
+        kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+        kmf.init(ks, pwdKeyStore.toCharArray());
+
+        SSLContext sc = SSLContext.getInstance("SSL");
+        sc.init(kmf.getKeyManagers(), null, null);
+
+        SSLServerSocketFactory ssf = sc.getServerSocketFactory();
+        sslserversocket = (SSLServerSocket) ssf.createServerSocket(50005);
 
     }
 

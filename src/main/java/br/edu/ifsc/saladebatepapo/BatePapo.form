@@ -138,7 +138,7 @@
                                   <Group type="102" attributes="0">
                                       <Component id="jTextFieldPorta" min="-2" pref="68" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelChaves" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="jButtonCarregarCertificado" min="-2" pref="209" max="-2" attributes="0"/>
                               </Group>
@@ -179,7 +179,7 @@
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextFieldPorta" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelChaves" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jRadioButLocal" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                           <Component id="jToggleButBuscarChaveLocal" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
@@ -260,7 +260,7 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel4">
+            <Component class="javax.swing.JLabel" name="jLabelChaves">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Servidor chaves"/>
               </Properties>
