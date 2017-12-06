@@ -5,20 +5,18 @@
  */
 package br.edu.ifsc.saladebatepapo.serverSSL;
 
-import br.edu.ifsc.saladebatepapo.CriptografiaRSA;
 import br.edu.ifsc.saladebatepapo.serverRSA.ServidorDeChave;
 import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.security.PublicKey;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.net.ssl.SSLSocket;
@@ -31,21 +29,20 @@ public class ServidorSSL extends Thread {
 
     public void receber() throws IOException, FileNotFoundException, ClassNotFoundException {
 
-        
-
         SSLServerSocket server;
         SSLServerSocketFactory factory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
         server = (SSLServerSocket) factory.createServerSocket(50002);
-        
-        
 
+        SSLServerSocket serverRetorno;
+        
+        serverRetorno = (SSLServerSocket) factory.createServerSocket(50003);
 
         while (true) {
             System.out.println("Preparando para receber certificado no servidor... ");
             int filesize = 6022386;
             int bytesRead;
             int current = 0;
-            SSLSocket sock =  (SSLSocket) server.accept();
+            SSLSocket sock = (SSLSocket) server.accept();
             System.out.println("Conexão aceita para receber: " + sock);
             // DataOutputStream out = new DataOutputStream(sock.getOutputStream());
 
@@ -70,34 +67,31 @@ public class ServidorSSL extends Thread {
 
             System.out.println("saindo do receber certificado ssl");
             sair = true;
-            retornoAutenticacao();
+            retornoAutenticacao(serverRetorno);
             System.out.println("Autenticacao enviada");
             //sock.close();
 
         }
     }
 
-    public void  ComparaCertificados() throws FileNotFoundException, IOException, ClassNotFoundException {
+    public void ComparaCertificados() throws FileNotFoundException, IOException, ClassNotFoundException {
 
         System.out.println("Comparando certificado recebido...");
 
     }
 
-    public void retornoAutenticacao() throws IOException, FileNotFoundException, ClassNotFoundException {
+    public void retornoAutenticacao(SSLServerSocket serverRetorno) throws IOException, FileNotFoundException, ClassNotFoundException {
         System.out.println("Entrou na autenticacao");
         // cria o nosso socket
 
         while (sair) {
-            
 
             // Socket sock = new Socket("10.151.34.51", 50000);
             // Socket sock = new Socket("localhost", 50001);
-            SSLServerSocket server;
-        SSLServerSocketFactory factory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
-        server = (SSLServerSocket) factory.createServerSocket(50003);
-        SSLSocket servsock =  (SSLSocket) server.accept();
+      
+            SSLSocket servsock = (SSLSocket) serverRetorno.accept();
             System.out.println("Conexão aceita: " + servsock);
-            String retorno = "ok";
+            String retorno = "Conexão: " + servsock.toString()+"\n";
             byte[] mybytearray = retorno.getBytes();
             System.out.println("array de bytes: " + mybytearray.toString());
 
@@ -125,13 +119,45 @@ public class ServidorSSL extends Thread {
 
     }
 
+    public void teste() {
+
+        SSLServerSocketFactory sslServerSocketFactory
+                = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+
+        try {
+            ServerSocket sslServerSocket
+                    = sslServerSocketFactory.createServerSocket(50002);
+            System.out.println("SSL ServerSocket iniciado");
+            System.out.println(sslServerSocket.toString());
+
+            Socket socket = sslServerSocket.accept();
+            System.out.println("ServerSocket accepted");
+
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            try (BufferedReader bufferedReader
+                    = new BufferedReader(
+                            new InputStreamReader(socket.getInputStream()))) {
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    System.out.println(line);
+                    out.println(line);
+                }
+            }
+            System.out.println("Closed");
+
+        } catch (IOException ex) {
+            System.out.println("Pau: " + ex);
+
+        }
+    }
+
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        System.setProperty("javax.net.ssl.keyStore","ssl/certificado");
-System.setProperty("javax.net.ssl.keyStorePassword","chatifsc");
+        System.setProperty("javax.net.ssl.keyStore", "ssl/CertificadoChat");
+        System.setProperty("javax.net.ssl.keyStorePassword", "chatifsc");
         ServidorSSL file = new ServidorSSL();
 
         file.receber();
-
+//file.teste();
         //file.enviarCriptografado();
     }
 

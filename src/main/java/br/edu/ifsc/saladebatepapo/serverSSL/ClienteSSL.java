@@ -9,9 +9,9 @@ package br.edu.ifsc.saladebatepapo.serverSSL;
  *
  * @author aluno
  */
-
 import java.net.*;
 import java.io.*;
+import java.util.Scanner;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
@@ -22,7 +22,7 @@ public class ClienteSSL {
     public void enviaCertificadoPublico(String ipServidor) throws IOException {
 
         //Socket sock = new Socket(ipServidor, 50002);
-         SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+        SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
         SSLSocket sock = (SSLSocket) factory.createSocket(ipServidor, 50002);
         System.out.println("Conexão aceita para enviar: " + sock);
         File arquivo = new File("ssl/certificado1.crt");
@@ -42,7 +42,7 @@ public class ClienteSSL {
     }
 
     public void receberRetornoAutenticacao(String ipServidor) throws IOException {
-        System.out.println("Entrou para receber o arquivo criptografado");
+        System.out.println("Entrou para receber retorno autenticação");
         int tamanho = 6022386;
 
         int bytesRead;
@@ -57,7 +57,7 @@ public class ClienteSSL {
         byte[] mybytearrayRecebido = new byte[tamanho];
         InputStream is = sock.getInputStream();
 
-        FileOutputStream fos = new FileOutputStream("teste.cer");
+        FileOutputStream fos = new FileOutputStream("Conectados.log", true);
         BufferedOutputStream bos = new BufferedOutputStream(fos);
         bytesRead = is.read(mybytearrayRecebido, 0, mybytearrayRecebido.length);
         current = bytesRead;
@@ -74,10 +74,36 @@ public class ClienteSSL {
         bos.close();
         sock.close();
     }
+    public void teste(){
+        SSLSocketFactory sslSocketFactory = 
+                (SSLSocketFactory)SSLSocketFactory.getDefault();
+        try {
+            Socket socket = sslSocketFactory.createSocket("localhost", 50002);
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            try (BufferedReader bufferedReader = 
+                    new BufferedReader(
+                            new InputStreamReader(socket.getInputStream()))) {
+                Scanner scanner = new Scanner(System.in);
+                while(true){
+                    System.out.println("Enter something:");
+                    String inputLine = scanner.nextLine();
+                    if(inputLine.equals("q")){
+                        break;
+                    }
+                     
+                    out.println(inputLine);
+                    System.out.println(bufferedReader.readLine());
+                }
+            }
+             
+        } catch (IOException ex) {
+            System.out.println("pau: "+ex);
+        }
+    }
 
     public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
-            System.setProperty("javax.net.ssl.keyStore","ssl/certificado");
-System.setProperty("javax.net.ssl.keyStorePassword","chatifsc");
+        System.setProperty("javax.net.ssl.trustStore", "ssl/CertificadoChat");
+        System.setProperty("javax.net.ssl.trustStorePassword", "chatifsc");
         ClienteSSL file = new ClienteSSL();
         //String ip = "10.151.34.51";
         String ip = "localhost";
@@ -89,6 +115,6 @@ System.setProperty("javax.net.ssl.keyStorePassword","chatifsc");
             System.out.println("demoro");
         }
         file.receberRetornoAutenticacao(ip);
-
+//file.teste();
     }
 }
