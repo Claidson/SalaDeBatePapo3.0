@@ -41,7 +41,7 @@ public class ServidorSSL extends Thread {
 
 
         while (true) {
-            System.out.println("Entrou no servidor while ");
+            System.out.println("Preparando para receber certificado no servidor... ");
             int filesize = 6022386;
             int bytesRead;
             int current = 0;
@@ -68,10 +68,10 @@ public class ServidorSSL extends Thread {
             System.out.println("recebido: " + bufferSaida.toString());
             bufferSaida.close();
 
-            System.out.println("saindo do receber");
+            System.out.println("saindo do receber certificado ssl");
             sair = true;
-            enviarCriptografado(sock);
-            System.out.println("passou o enviar");
+            retornoAutenticacao();
+            System.out.println("Autenticacao enviada");
             //sock.close();
 
         }
@@ -83,8 +83,8 @@ public class ServidorSSL extends Thread {
 
     }
 
-    public void enviarCriptografado(SSLSocket servsock) throws IOException, FileNotFoundException, ClassNotFoundException {
-        System.out.println("Entrou no enviar criptogtafado");
+    public void retornoAutenticacao() throws IOException, FileNotFoundException, ClassNotFoundException {
+        System.out.println("Entrou na autenticacao");
         // cria o nosso socket
 
         while (sair) {
@@ -92,13 +92,17 @@ public class ServidorSSL extends Thread {
 
             // Socket sock = new Socket("10.151.34.51", 50000);
             // Socket sock = new Socket("localhost", 50001);
+            SSLServerSocket server;
+        SSLServerSocketFactory factory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+        server = (SSLServerSocket) factory.createServerSocket(50003);
+        SSLSocket servsock =  (SSLSocket) server.accept();
             System.out.println("Conexão aceita: " + servsock);
-            // File arquivo = new File(CriptografiaRSA.PATH_CHAVE_PUBLICA);
-            byte[] mybytearray = null;
+            String retorno = "ok";
+            byte[] mybytearray = retorno.getBytes();
             System.out.println("array de bytes: " + mybytearray.toString());
 
             OutputStream os = servsock.getOutputStream();
-            System.out.println("Enviando criptografado...");
+            System.out.println("Enviando retorno...");
             os.write(mybytearray, 0, mybytearray.length);
             os.flush();
             servsock.close();
@@ -112,17 +116,19 @@ public class ServidorSSL extends Thread {
         try {
             receber();
         } catch (IOException ex) {
-            System.out.println("Pau ao iniciar serdor de chaves");
+            System.out.println("Pau ao iniciar servidor ssl");
             Logger.getLogger(ServidorDeChave.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            System.out.println("Pau ao iniciar serdor de chaves");
+            System.out.println("Pau ao iniciar servidor ssl");
             Logger.getLogger(ServidorDeChave.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        ServidorDeChave file = new ServidorDeChave();
+        System.setProperty("javax.net.ssl.keyStore","ssl/certificado");
+System.setProperty("javax.net.ssl.keyStorePassword","chatifsc");
+        ServidorSSL file = new ServidorSSL();
 
         file.receber();
 

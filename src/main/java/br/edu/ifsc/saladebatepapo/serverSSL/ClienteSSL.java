@@ -9,7 +9,7 @@ package br.edu.ifsc.saladebatepapo.serverSSL;
  *
  * @author aluno
  */
-import br.edu.ifsc.saladebatepapo.CriptografiaRSA;
+
 import java.net.*;
 import java.io.*;
 import javax.net.ssl.SSLSocket;
@@ -19,9 +19,11 @@ public class ClienteSSL {
 
     public String chaveCriptogtafada;
 
-    public void enviaChavePublica(String ipServidor) throws IOException {
+    public void enviaCertificadoPublico(String ipServidor) throws IOException {
 
-        Socket sock = new Socket(ipServidor, 50000);
+        //Socket sock = new Socket(ipServidor, 50002);
+         SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+        SSLSocket sock = (SSLSocket) factory.createSocket(ipServidor, 50002);
         System.out.println("Conexão aceita para enviar: " + sock);
         File arquivo = new File("ssl/certificado1.crt");
         byte[] mybytearray = new byte[(int) arquivo.length()];
@@ -35,11 +37,11 @@ public class ClienteSSL {
         //receberArquivo(sock);
 
         sock.close();
-        System.out.println("saindo do enviar a chave: ");
+        System.out.println("certificado enviado: ");
         //receberArquivo(sock);
     }
 
-    public void receberArquivoCriptografado(String ipServidor) throws IOException {
+    public void receberRetornoAutenticacao(String ipServidor) throws IOException {
         System.out.println("Entrou para receber o arquivo criptografado");
         int tamanho = 6022386;
 
@@ -47,7 +49,7 @@ public class ClienteSSL {
         int current = 0;
 
         SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-        SSLSocket sock = (SSLSocket) factory.createSocket(ipServidor, 50002);
+        SSLSocket sock = (SSLSocket) factory.createSocket(ipServidor, 50003);
         //Socket sock = new Socket(ipServidor, 50002);
         //Socket sock = new Socket("10.151.34.51", 50000);
 
@@ -55,7 +57,7 @@ public class ClienteSSL {
         byte[] mybytearrayRecebido = new byte[tamanho];
         InputStream is = sock.getInputStream();
 
-        FileOutputStream fos = new FileOutputStream("tste.cer");
+        FileOutputStream fos = new FileOutputStream("teste.cer");
         BufferedOutputStream bos = new BufferedOutputStream(fos);
         bytesRead = is.read(mybytearrayRecebido, 0, mybytearrayRecebido.length);
         current = bytesRead;
@@ -74,17 +76,19 @@ public class ClienteSSL {
     }
 
     public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
+            System.setProperty("javax.net.ssl.keyStore","ssl/certificado");
+System.setProperty("javax.net.ssl.keyStorePassword","chatifsc");
         ClienteSSL file = new ClienteSSL();
         //String ip = "10.151.34.51";
         String ip = "localhost";
-        file.enviaChavePublica(ip);
+        file.enviaCertificadoPublico(ip);
         System.out.println("Enviou");
         try {
             Thread.sleep(2000);
         } catch (Exception e) {
             System.out.println("demoro");
         }
-        file.receberArquivoCriptografado(ip);
+        file.receberRetornoAutenticacao(ip);
 
     }
 }
