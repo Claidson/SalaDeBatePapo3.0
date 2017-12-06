@@ -19,13 +19,15 @@ public class ClienteSSL {
 
     public String chaveCriptogtafada;
 
-    public void enviaCertificadoPublico(String ipServidor) throws IOException {
-        System.setProperty("javax.net.ssl.trustStore", "ssl/CertificadoChatTeste.cer");
+    public void enviaCertificadoPublico(String ipServidor, String caminho) throws IOException {
+       // System.setProperty("javax.net.ssl.trustStore", "/home/user/NetBeansProjects/SalaDeBatePapo3.0/ssl/CertificadoChatTeste.cer");
+        System.setProperty("javax.net.ssl.trustStore", caminho);
         System.setProperty("javax.net.ssl.trustStorePassword", "chatifsc");
-
+        System.out.println("Caminho cliente: "+ caminho);
         //Socket sock = new Socket(ipServidor, 50002);
         SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
         SSLSocket sock = (SSLSocket) factory.createSocket(ipServidor, 50002);
+
         System.out.println("Conexão aceita para enviar: " + sock);
         File arquivo = new File("ssl/certificado1.crt");
         byte[] mybytearray = new byte[(int) arquivo.length()];
@@ -43,7 +45,7 @@ public class ClienteSSL {
         //receberArquivo(sock);
     }
 
-    public void receberRetornoAutenticacao(String ipServidor) throws IOException {
+    public String receberRetornoAutenticacao(String ipServidor) throws IOException {
         System.out.println("Entrou para receber retorno autenticação");
         int tamanho = 6022386;
 
@@ -71,51 +73,55 @@ public class ClienteSSL {
             }
         } while (bytesRead > -1);
         bos.write(mybytearrayRecebido, 0, current);
+        String retorno = sock.getSession().toString();
 
-        System.out.println("recebido: " + bos.toString());
+        System.out.println("recebido: " + sock.getSession());
         bos.close();
         sock.close();
+     
+        return retorno;
     }
-    public void teste(){
-        SSLSocketFactory sslSocketFactory = 
-                (SSLSocketFactory)SSLSocketFactory.getDefault();
+
+    public void teste() {
+        SSLSocketFactory sslSocketFactory
+                = (SSLSocketFactory) SSLSocketFactory.getDefault();
         try {
             Socket socket = sslSocketFactory.createSocket("localhost", 50002);
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            try (BufferedReader bufferedReader = 
-                    new BufferedReader(
+            try (BufferedReader bufferedReader
+                    = new BufferedReader(
                             new InputStreamReader(socket.getInputStream()))) {
                 Scanner scanner = new Scanner(System.in);
-                while(true){
+                while (true) {
                     System.out.println("Enter something:");
                     String inputLine = scanner.nextLine();
-                    if(inputLine.equals("q")){
+                    if (inputLine.equals("q")) {
                         break;
                     }
-                     
+
                     out.println(inputLine);
                     System.out.println(bufferedReader.readLine());
                 }
             }
-             
+
         } catch (IOException ex) {
-            System.out.println("pau: "+ex);
+            System.out.println("pau: " + ex);
         }
     }
 
     public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
-        
+
         ClienteSSL file = new ClienteSSL();
         //String ip = "10.151.34.51";
         String ip = "localhost";
-        file.enviaCertificadoPublico(ip);
+        file.enviaCertificadoPublico(ip, "ssl/CertificadoChat.cer");
         System.out.println("Enviou");
         try {
             Thread.sleep(2000);
         } catch (Exception e) {
             System.out.println("demoro");
         }
-        file.receberRetornoAutenticacao(ip);
+      //  file.receberRetornoAutenticacao(ip);
 //file.teste();
     }
 }
