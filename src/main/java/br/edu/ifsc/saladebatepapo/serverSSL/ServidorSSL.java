@@ -36,7 +36,7 @@ public class ServidorSSL extends Thread {
     Boolean sair = true;
 
     public void receber() throws IOException, FileNotFoundException, ClassNotFoundException {
-        System.setProperty("javax.net.ssl.keyStore", "/home/user/NetBeansProjects/SalaDeBatePapo3.0/ssl/CertificadoChat.cer");
+        System.setProperty("javax.net.ssl.keyStore", "ssl/CertificadoChat.cer");
         System.setProperty("javax.net.ssl.keyStorePassword", "chatifsc");
 
         while (true) {
@@ -96,18 +96,18 @@ public class ServidorSSL extends Thread {
     }
 
     public void ComparaCertificados() throws FileNotFoundException, IOException, ClassNotFoundException {
-
-        System.out.println("Comparando certificado recebido...");
-        KeyStore ks = LoadKeyStore(new File(serverKeyStore), pwdKeyStore, "JCEKS");
-        KeyManagerFactory kmf;
-        kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-        kmf.init(ks, pwdKeyStore.toCharArray());
-
-        SSLContext sc = SSLContext.getInstance("SSL");
-        sc.init(kmf.getKeyManagers(), null, null);
-
-        SSLServerSocketFactory ssf = sc.getServerSocketFactory();
-        sslserversocket = (SSLServerSocket) ssf.createServerSocket(50005);
+//
+//        System.out.println("Comparando certificado recebido...");
+//        KeyStore ks = LoadKeyStore(new File(serverKeyStore), pwdKeyStore, "JCEKS");
+//        KeyManagerFactory kmf;
+//        kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+//        kmf.init(ks, pwdKeyStore.toCharArray());
+//
+//        SSLContext sc = SSLContext.getInstance("SSL");
+//        sc.init(kmf.getKeyManagers(), null, null);
+//
+//        SSLServerSocketFactory ssf = sc.getServerSocketFactory();
+//        sslserversocket = (SSLServerSocket) ssf.createServerSocket(50005);
 
     }
 

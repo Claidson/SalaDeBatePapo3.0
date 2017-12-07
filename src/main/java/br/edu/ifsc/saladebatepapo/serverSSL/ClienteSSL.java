@@ -20,7 +20,7 @@ public class ClienteSSL {
     public String chaveCriptogtafada;
 
     public Boolean enviaCertificadoPublico(String ipServidor, String caminho) throws IOException {
-//        System.setProperty("javax.net.ssl.trustStore", "/home/user/NetBeansProjects/SalaDeBatePapo3.0/ssl/CertificadoChatTeste.cer");
+       // System.setProperty("javax.net.ssl.trustStore", "ssl/CertificadoChat.cer");
         System.setProperty("javax.net.ssl.trustStore", caminho);
         System.setProperty("javax.net.ssl.trustStorePassword", "chatifsc");
         // System.out.println("Caminho cliente: " + caminho);
@@ -29,7 +29,7 @@ public class ClienteSSL {
         SSLSocketFactory fabrica = (SSLSocketFactory) SSLSocketFactory.getDefault();
         SSLSocket sock = (SSLSocket) fabrica.createSocket(ipServidor, 50002);
         try {
-            System.out.println("Conexão aceita para enviar: " + sock);
+            System.out.println("Conexão aceita para enviar certificado: " + sock);
             File arquivo = new File("ssl/certificado1.crt");
             byte[] mybytearray = new byte[(int) arquivo.length()];
             FileInputStream fis = new FileInputStream(arquivo);
@@ -44,12 +44,16 @@ public class ClienteSSL {
             autenticou = true;
 
         } catch (Exception e) {
-            System.out.println("Erro no aperto de mão ao enviar certificado ao servidor" +e);
-        }
-        sock.close();
+            System.out.println("Erro no aperto de mão ao enviar certificado ao servidor " +e);
+            e.printStackTrace();
+        }finally{
+            sock.close();
+            
 
         //receberArquivo(sock);
         return autenticou;
+        }
+        
     }
 
     public String receberRetornoAutenticacao(String ipServidor) throws IOException {
@@ -128,7 +132,7 @@ public class ClienteSSL {
         } catch (Exception e) {
             System.out.println("demoro");
         }
-        //  file.receberRetornoAutenticacao(ip);
+          file.receberRetornoAutenticacao(ip);
 //file.teste();
     }
 }

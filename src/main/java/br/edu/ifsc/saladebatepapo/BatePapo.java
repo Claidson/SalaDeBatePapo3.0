@@ -634,6 +634,7 @@ public class BatePapo extends javax.swing.JFrame {
                     habilitaBuscaChave(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Verifique seu certificado...\t");
+                    System.exit(1);
                 }
 
             } catch (Exception ex) {
