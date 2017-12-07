@@ -82,7 +82,7 @@ public class ServidorDeChave extends Thread {
                 byte[] mybytearrayRecebido = new byte[filesize];
                 InputStream is = sock.getInputStream();
 
-                FileOutputStream arquivoSaidaStream = new FileOutputStream("CertificadoRecebido.cer");
+                FileOutputStream arquivoSaidaStream = new FileOutputStream("chavePublicaRecebida.key");
                 BufferedOutputStream bufferSaida = new BufferedOutputStream(arquivoSaidaStream);
                 bytesRead = is.read(mybytearrayRecebido, 0, mybytearrayRecebido.length);
                 current = bytesRead;
