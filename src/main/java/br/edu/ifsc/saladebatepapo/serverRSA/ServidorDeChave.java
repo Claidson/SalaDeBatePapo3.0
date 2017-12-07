@@ -55,7 +55,7 @@ public class ServidorDeChave extends Thread {
 //            System.out.println("passou o enviar");
 //            sock.close();
 
- System.setProperty("javax.net.ssl.keyStore", "ssl/CertificadoChat.cer");
+        System.setProperty("javax.net.ssl.keyStore", "ssl/CertificadoChat.cer");
         System.setProperty("javax.net.ssl.keyStorePassword", "chatifsc");
 
         while (true) {
@@ -138,7 +138,7 @@ public class ServidorDeChave extends Thread {
 
         while (sair) {
             System.out.println("Entrou no enviar criptogtafado while");
-          //  Socket sock = servsock.accept();
+            //  Socket sock = servsock.accept();
             // Socket sock = new Socket("10.151.34.51", 50000);
             // Socket sock = new Socket("localhost", 50001);
             SSLSocket sock = (SSLSocket) serverRetorno.accept();

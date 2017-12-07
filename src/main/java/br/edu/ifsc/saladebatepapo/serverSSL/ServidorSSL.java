@@ -20,6 +20,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.KeyStore;
+import java.util.ArrayList;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.net.ssl.KeyManagerFactory;
@@ -36,9 +38,13 @@ public class ServidorSSL extends Thread {
     Boolean sair = true;
 
     public void receber() throws IOException, FileNotFoundException, ClassNotFoundException {
-        System.setProperty("javax.net.ssl.keyStore", "ssl/CertificadoChat.cer");
-        System.setProperty("javax.net.ssl.keyStorePassword", "chatifsc");
+//        System.setProperty("javax.net.ssl.keyStore", "ssl/CertificadoChat.cer");
+//        System.setProperty("javax.net.ssl.keyStorePassword", "chatifsc");
 
+        Properties prop = new Properties();
+        prop.setProperty("javax.net.ssl.keyStore","ssl/CertificadoChat.cer");
+
+        System.setProperties(prop);
         while (true) {
             SSLServerSocket server;
             SSLServerSocketFactory factory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
@@ -185,7 +191,8 @@ public class ServidorSSL extends Thread {
 
         ServidorSSL file = new ServidorSSL();
 
-        file.receber();
+        //file.receber();
+        System.getProperties().list(System.out);
 //file.teste();
         //file.enviarCriptografado();
     }
