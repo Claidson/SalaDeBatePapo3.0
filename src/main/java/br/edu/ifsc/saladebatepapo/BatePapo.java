@@ -462,6 +462,7 @@ public class BatePapo extends javax.swing.JFrame {
             if (chaveDescripgrafada != null) {
                 jToggleButBuscarChaveRemota.setText("Recebeu");
                 jToggleButBuscarChaveRemota.setBackground(Color.YELLOW);
+                jButtonCarregarCertificado.setEnabled(false);
 
             } else {
                 jToggleButBuscarChaveRemota.setText("Buscar");
@@ -631,6 +632,7 @@ public class BatePapo extends javax.swing.JFrame {
         jTextFieldNome.setEnabled(!jTextFieldNome.isEnabled());
         jTextFieldPorta.setEnabled(!jTextFieldPorta.isEnabled());
         jTextFieldIP.setEnabled(!jTextFieldIP.isEnabled());
+        jToggleButBuscarChaveRemota.setEnabled(!jToggleButBuscarChaveRemota.isEnabled());
 
     }
 

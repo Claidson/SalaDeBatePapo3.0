@@ -47,7 +47,7 @@ public class ConectarThread extends Thread {
             msgOut = new DatagramPacket(data, data.length, InetAddress.getByName(grupo), porta);
             socket.send(msgOut);
         } catch (IOException ex) {
-            System.out.println("ConectarThread - deu pal para enviar mensagem");
+            System.out.println("ConectarThread - deu pal para enviar mensagem"+ msgOut.toString());
         }
     }
     public void parar(){
