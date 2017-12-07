@@ -16,3 +16,5 @@ Conexão: 3f91beef[SSL_NULL_WITH_NULL_NULL: Socket[addr=/127.0.0.1,port=55822,lo
 Conexão: 254989ff[SSL_NULL_WITH_NULL_NULL: Socket[addr=/127.0.0.1,port=55832,localport=50003]]
 Conexão: 17f052a3[SSL_NULL_WITH_NULL_NULL: Socket[addr=/127.0.0.1,port=55844,localport=50003]]
 Conexão: 2e5d6d97[SSL_NULL_WITH_NULL_NULL: Socket[addr=/127.0.0.1,port=55856,localport=50003]]
+Conexão: 3f3afe78[SSL_NULL_WITH_NULL_NULL: Socket[addr=/10.151.34.132,port=51903,localport=50003]]
+Conexão: 57829d67[SSL_NULL_WITH_NULL_NULL: Socket[addr=/10.151.34.132,port=51910,localport=50003]]

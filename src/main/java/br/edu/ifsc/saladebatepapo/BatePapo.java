@@ -69,7 +69,7 @@ public class BatePapo extends javax.swing.JFrame {
         getRootPane().setDefaultButton(jButtonEnviar);
         adicionaLookMenu();
         desabilitaBotoesServidorChaves();
-        habilitaBuscaChave(false);
+        habilitaBuscaChave(true);
 
     }
 
@@ -104,15 +104,11 @@ public class BatePapo extends javax.swing.JFrame {
         jTextFieldPorta = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jComboBoxSkin = new javax.swing.JComboBox<>();
-        jLabelChaves = new javax.swing.JLabel();
-        jRadioButLocal = new javax.swing.JRadioButton();
-        jToggleButBuscarChaveLocal = new javax.swing.JToggleButton();
-        jRadioButRemoto = new javax.swing.JRadioButton();
         jToggleButBuscarChaveRemota = new javax.swing.JToggleButton();
         jTextFieldIP = new javax.swing.JTextField();
         jButtonCarregarCertificado = new javax.swing.JButton();
-        jTextFieldServidorSSL = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jLabelCaminho = new javax.swing.JLabel();
         jPanelServidor = new javax.swing.JPanel();
         jToggleChat = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -149,29 +145,6 @@ public class BatePapo extends javax.swing.JFrame {
             }
         });
 
-        jLabelChaves.setText("Servidor chaves");
-
-        jRadioButLocal.setText("Local");
-        jRadioButLocal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButLocalActionPerformed(evt);
-            }
-        });
-
-        jToggleButBuscarChaveLocal.setText("Iniciar ");
-        jToggleButBuscarChaveLocal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButBuscarChaveLocalActionPerformed(evt);
-            }
-        });
-
-        jRadioButRemoto.setText("Remoto");
-        jRadioButRemoto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButRemotoActionPerformed(evt);
-            }
-        });
-
         jToggleButBuscarChaveRemota.setText("Buscar");
         jToggleButBuscarChaveRemota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,7 +152,7 @@ public class BatePapo extends javax.swing.JFrame {
             }
         });
 
-        jTextFieldIP.setText("10.151.34.51");
+        jTextFieldIP.setText("localhost");
         jTextFieldIP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldIPActionPerformed(evt);
@@ -193,57 +166,47 @@ public class BatePapo extends javax.swing.JFrame {
             }
         });
 
-        jTextFieldServidorSSL.setText("localhost");
-
         jLabel6.setText("Servidor SSL");
+
+        jLabelCaminho.setText("___________________________");
 
         javax.swing.GroupLayout jPanelNomeLayout = new javax.swing.GroupLayout(jPanelNome);
         jPanelNome.setLayout(jPanelNomeLayout);
         jPanelNomeLayout.setHorizontalGroup(
             jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelNomeLayout.createSequentialGroup()
-                .addGap(2, 2, 2)
-                .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanelNomeLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(jButtonCarregarCertificado, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelCaminho)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jToggleButBuscarChaveRemota, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelNomeLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanelNomeLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelNomeLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldPorta, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel6)
+                                .addGap(8, 8, 8)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxSkin, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelNomeLayout.createSequentialGroup()
                         .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelNomeLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(2, 2, 2)
-                                .addComponent(jLabel2))
-                            .addGroup(jPanelNomeLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldServidorSSL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelNomeLayout.createSequentialGroup()
-                                .addComponent(jTextFieldPorta, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabelChaves))
-                            .addComponent(jButtonCarregarCertificado, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelNomeLayout.createSequentialGroup()
-                                .addComponent(jRadioButRemoto)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldIP, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jToggleButBuscarChaveRemota))
-                            .addGroup(jPanelNomeLayout.createSequentialGroup()
-                                .addComponent(jRadioButLocal)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jToggleButBuscarChaveLocal)))))
-                .addContainerGap(34, Short.MAX_VALUE))
+                            .addComponent(jComboBoxSkin, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldIP, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
         jPanelNomeLayout.setVerticalGroup(
             jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,30 +217,27 @@ public class BatePapo extends javax.swing.JFrame {
                     .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(jComboBoxSkin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextFieldPorta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabelChaves)
-                    .addComponent(jRadioButLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButBuscarChaveLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelNomeLayout.createSequentialGroup()
-                        .addGap(0, 2, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButRemoto)
-                            .addComponent(jToggleButBuscarChaveRemota, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
-                    .addGroup(jPanelNomeLayout.createSequentialGroup()
-                        .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldServidorSSL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
-                            .addComponent(jButtonCarregarCertificado))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jLabel3)
+                            .addComponent(jTextFieldGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextFieldPorta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonCarregarCertificado))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelNomeLayout.createSequentialGroup()
+                        .addComponent(jTextFieldIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelNomeLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabelCaminho))
+                            .addComponent(jToggleButBuscarChaveRemota, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
 
         jToggleChat.setText("Entrar");
@@ -332,7 +292,7 @@ public class BatePapo extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jPanelServidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanelNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -359,11 +319,11 @@ public class BatePapo extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(3, 3, 3)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 20, Short.MAX_VALUE))
-                    .addComponent(jMenuVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)))
+                .addComponent(jMenuVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -392,10 +352,9 @@ public class BatePapo extends javax.swing.JFrame {
             jLabel1.setForeground(corFonte);
             jLabel2.setForeground(corFonte);
             jLabel3.setForeground(corFonte);
-            jLabelChaves.setForeground(corFonte);
+
             jLabel5.setForeground(corFonte);
-            jRadioButLocal.setForeground(corFonte);
-            jRadioButRemoto.setForeground(corFonte);
+
             jListBatePapo.setBackground(Color.DARK_GRAY);
             jListBatePapo.setForeground(Color.WHITE);
 
@@ -407,10 +366,9 @@ public class BatePapo extends javax.swing.JFrame {
             jLabel1.setForeground(corFonte);
             jLabel2.setForeground(corFonte);
             jLabel3.setForeground(corFonte);
-            jLabelChaves.setForeground(corFonte);
+
             jLabel5.setForeground(corFonte);
-            jRadioButLocal.setForeground(corFonte);
-            jRadioButRemoto.setForeground(corFonte);
+            ;
             jListBatePapo.setBackground(corFundo);
             jListBatePapo.setForeground(corFonte);
         } else if (jComboBoxSkin.getSelectedIndex() == 0) {
@@ -421,10 +379,9 @@ public class BatePapo extends javax.swing.JFrame {
             jLabel1.setForeground(corFonte);
             jLabel2.setForeground(corFonte);
             jLabel3.setForeground(corFonte);
-            jLabelChaves.setForeground(corFonte);
+
             jLabel5.setForeground(corFonte);
-            jRadioButLocal.setForeground(corFonte);
-            jRadioButRemoto.setForeground(corFonte);
+
             jListBatePapo.setBackground(Color.WHITE);
             jListBatePapo.setForeground(Color.BLACK);
         }
@@ -443,7 +400,7 @@ public class BatePapo extends javax.swing.JFrame {
         try {
 
             System.out.println("vai ir a chave");
-            clientRSA.enviaChavePublica(ip);
+            clientRSA.enviaChavePublica(ip, jLabelCaminho.getText());
             System.out.println("Foi a chave");
 
             Thread.sleep(2000);
@@ -492,41 +449,6 @@ public class BatePapo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPortaActionPerformed
 
-    private void jRadioButLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButLocalActionPerformed
-        jRadioButRemoto.setSelected(false);
-        desabilitaBotoesServidorChaves();
-        jToggleButBuscarChaveLocal.setVisible(true);
-
-    }//GEN-LAST:event_jRadioButLocalActionPerformed
-
-    private void jToggleButBuscarChaveLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButBuscarChaveLocalActionPerformed
-
-        if (jToggleButBuscarChaveLocal.isSelected()) {
-            IpServidorChave = "localhost";
-            try {
-                receberChave(IpServidorChave);
-            } catch (IOException | ClassNotFoundException ex) {
-                System.out.println("pau ao receber chave local");
-                Logger.getLogger(BatePapo.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            if (chaveDescripgrafada != null) {
-                jToggleButBuscarChaveLocal.setText("Recebeu");
-                jToggleButBuscarChaveLocal.setBackground(Color.YELLOW);
-
-            } else {
-                jToggleButBuscarChaveLocal.setText("Buscar");
-                jToggleButBuscarChaveLocal.setSelected(false);
-                JOptionPane.showMessageDialog(null, "Verifique servidor de chaves local");
-            }
-
-        } else {
-
-            jToggleButBuscarChaveLocal.setText("Buscar");
-        }
-
-    }//GEN-LAST:event_jToggleButBuscarChaveLocalActionPerformed
-
     private void jToggleButBuscarChaveRemotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButBuscarChaveRemotaActionPerformed
         if (jToggleButBuscarChaveRemota.isSelected()) {
             IpServidorChave = jTextFieldIP.getText();
@@ -554,13 +476,6 @@ public class BatePapo extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jToggleButBuscarChaveRemotaActionPerformed
-
-    private void jRadioButRemotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButRemotoActionPerformed
-        jRadioButLocal.setSelected(false);
-        desabilitaBotoesServidorChaves();
-        jToggleButBuscarChaveRemota.setVisible(true);
-        jTextFieldIP.setVisible(true);
-    }//GEN-LAST:event_jRadioButRemotoActionPerformed
 
     private void jToggleChatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleChatActionPerformed
         if (jToggleChat.isSelected()) {
@@ -621,36 +536,17 @@ public class BatePapo extends javax.swing.JFrame {
             File arquivo = file.getSelectedFile();
             caminhoCertificado = arquivo.getPath();
             System.out.println("Caminho certificado escolhido: " + caminhoCertificado);
-            Boolean autenticou =false;
-            try {
-                System.out.println("Tentando autenticar: "+ autenticou.toString());
-                autenticou = clienteSSL.enviaCertificadoPublico(jTextFieldServidorSSL.getText(), caminhoCertificado);
-                System.out.println("Depois de autenticar: "+ autenticou.toString());
-                if (autenticou) {
+            jLabelCaminho.setText(caminhoCertificado);
+            //Boolean autenticou = false;
 
-                    Thread.sleep(3000);
-                    String retorno = clienteSSL.receberRetornoAutenticacao(jTextFieldServidorSSL.getText());
-                    JOptionPane.showMessageDialog(null, "Conectado...\n" + retorno);
-                    habilitaBuscaChave(true);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Verifique seu certificado...\t");
-                    System.exit(1);
-                }
-
-            } catch (Exception ex) {
-                System.out.println("Pau ao selecionar certificado..." + ex);
-                JOptionPane.showMessageDialog(null, "Erro...verifique seu certificado...\t");
-
-            }
         }
+
     }//GEN-LAST:event_jButtonCarregarCertificadoActionPerformed
     public void habilitaBuscaChave(Boolean estado) {
-        jRadioButLocal.setVisible(estado);
-        jRadioButRemoto.setVisible(estado);
-        jToggleButBuscarChaveLocal.setVisible(estado);
+
         jToggleButBuscarChaveRemota.setVisible(estado);
         jTextFieldIP.setVisible(estado);
-        jLabelChaves.setVisible(estado);
+
     }
 
     public void inserirTexto(String texto) {
@@ -660,7 +556,7 @@ public class BatePapo extends javax.swing.JFrame {
 
     public void desabilitaBotoesServidorChaves() {
         jTextFieldIP.setVisible(false);
-        jToggleButBuscarChaveLocal.setVisible(false);
+
         jToggleButBuscarChaveRemota.setVisible(false);
     }
 
@@ -808,22 +704,18 @@ public class BatePapo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabelChaves;
+    private javax.swing.JLabel jLabelCaminho;
     private javax.swing.JList<String> jListBatePapo;
     private javax.swing.JToolBar jMenuVisualizar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelNome;
     private javax.swing.JPanel jPanelServidor;
-    private javax.swing.JRadioButton jRadioButLocal;
-    private javax.swing.JRadioButton jRadioButRemoto;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextFieldGrupo;
     private javax.swing.JTextField jTextFieldIP;
     private javax.swing.JTextField jTextFieldMensagem;
     private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JTextField jTextFieldPorta;
-    private javax.swing.JTextField jTextFieldServidorSSL;
-    private javax.swing.JToggleButton jToggleButBuscarChaveLocal;
     private javax.swing.JToggleButton jToggleButBuscarChaveRemota;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleChat;
